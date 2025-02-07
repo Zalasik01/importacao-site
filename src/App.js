@@ -9,6 +9,7 @@ import "./App.css";
 function App() {
   const [origem, setOrigem] = useState("");
   const [tipoConversao, setTipoConversao] = useState("");
+  const [posicao, setPosicao] = useState(""); 
   const [cnpj, setCNPJ] = useState("");
   const [file, setFile] = useState(null);
 
@@ -16,10 +17,17 @@ function App() {
     <ErrorBoundary>
       <div className="App">
         <h1>Site para conversão de planilha - Altimus</h1>
-        <Dropdowns origem={origem} setOrigem={setOrigem} tipoConversao={tipoConversao} setTipoConversao={setTipoConversao} />
+        <Dropdowns
+          origem={origem}
+          setOrigem={setOrigem}
+          tipoConversao={tipoConversao}
+          setTipoConversao={setTipoConversao}
+          posicao={posicao} 
+          setPosicao={setPosicao} 
+        />
         {origem && <CNPJInput cnpj={cnpj} setCNPJ={setCNPJ} />}
         {cnpj && origem && tipoConversao && (
-          <FileUploader file={file} setFile={setFile} cnpj={cnpj} />
+          <FileUploader file={file} setFile={setFile} cnpj={cnpj} posicao={posicao} />
         )}
       </div>
     </ErrorBoundary>

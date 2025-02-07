@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './FileUploader.css';
 import * as XLSX from 'xlsx';
 
-function FileUploader({ cnpj, file, setFile }) {
+function FileUploader({ cnpj, file, setFile, posicao }) {
   const [sheetData, setSheetData] = useState([]);
   const [columns, setColumns] = useState([]);
 
@@ -50,11 +50,21 @@ function FileUploader({ cnpj, file, setFile }) {
       const complemento = modelo.includes(" ") ? modelo.split(" ").slice(1).join(" ") : "";
       const modeloFinal = modelo.split(" ")[0];
 
+      let nomeProprietario, cpfCnpjProprietario;
+
+      if (row[columns.indexOf("FORNECEDOR")]) {
+        nomeProprietario = row[columns.indexOf("FORNECEDOR")];
+        cpfCnpjProprietario = row[columns.indexOf("CPF/CNPJ FORNECEDOR")];
+      } else if (row[columns.indexOf("CLIENTE")]) {
+        nomeProprietario = row[columns.indexOf("CLIENTE")];
+        cpfCnpjProprietario = row[columns.indexOf("CPF/CNPJ CLIENTE")];
+      }
+
       let rowData = {
         "ID": "", 
-        "STATUS": row[columns.indexOf("POSICAO ESTOQUE")],
-        "DATA DE ENTRADA": row[columns.indexOf("DATA COMPRA")] + " 00:00:00",
-        "DATA E HORA DE SAIDA": "", 
+        "STATUS": posicao === "Estoque" ? 0 : 1,
+        "DATA DE ENTRADA": row[columns.indexOf("DATA COMPRA")] ? row[columns.indexOf("DATA COMPRA")] + " 00:00:00" : "",
+        "DATA E HORA DE SAIDA": row[columns.indexOf("DATA VENDA")] ? row[columns.indexOf("DATA VENDA")] + " 00:00:00" : "",
         "MARCA": row[columns.indexOf("MARCA")], 
         "MODELO": modeloFinal,
         "COMPLEMENTO": complemento, 
@@ -75,8 +85,8 @@ function FileUploader({ cnpj, file, setFile }) {
         "VALOR COMPRA": row[columns.indexOf("VALOR COMPRA")], 
         "VALOR A VISTA": row[columns.indexOf("VALOR VENDA")], 
         "VALOR DE VENDA": row[columns.indexOf("VALOR VENDA")], 
-        "NOME PROPRIETARIO ENTRADA": row[columns.indexOf("FORNECEDOR")], 
-        "CPF/CNPJ PROPRIETARIO ENTRADA": row[columns.indexOf("CPF/CNPJ FORNECEDOR")], 
+        "NOME PROPRIETARIO ENTRADA": nomeProprietario, 
+        "CPF/CNPJ PROPRIETARIO ENTRADA": cpfCnpjProprietario, 
         "KM": row[columns.indexOf("KM")], 
         "PORTAS": "", 
         "CAMBIO": "", 
