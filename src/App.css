@@ -43,3 +43,10 @@ input[type="text"] {
 div {
   margin-bottom: 20px;
 }
+
+.versao {
+  font-size: 12px;
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+}

@@ -12,6 +12,7 @@ function App() {
   const [posicao, setPosicao] = useState(""); 
   const [cnpj, setCNPJ] = useState("");
   const [file, setFile] = useState(null);
+  
 
   return (
     <ErrorBoundary>
@@ -29,6 +30,7 @@ function App() {
         {cnpj && origem && tipoConversao && (
           <FileUploader file={file} setFile={setFile} cnpj={cnpj} posicao={posicao} />
         )}
+        <p className="versao">Atualizado: 07/02/2025 17:33</p>
       </div>
     </ErrorBoundary>
   );
