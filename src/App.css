@@ -1,0 +1,45 @@
+.App {
+  text-align: center;
+  padding: 20px;
+}
+
+body {
+  background-color: #f5eeff;
+  margin: 0;
+}
+
+h1 {
+  color: #6e0ad6;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-shadow: 3px 3px 5px #f5eeff;
+}
+
+label {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+input, select {
+  margin: 10px;
+  padding: 8px;
+  font-size: 16px;
+}
+
+select {
+  width: 200px;
+  border-radius: 3px;
+  border: none;
+  outline: none;
+}
+
+input[type="text"] {
+  width: 250px;
+  border-radius: 3px;
+  border: none;
+  outline: none;
+}
+
+div {
+  margin-bottom: 20px;
+}
