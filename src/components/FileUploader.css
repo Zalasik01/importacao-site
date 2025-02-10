@@ -67,15 +67,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 60vh;
+    justify-content: flex-start;
     padding: 20px;
-  }
+    height: 50vh;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
   
   table {
     width: 100%;
     max-width: 1200px;
-    margin: 20px auto;
+    margin: 0 auto;
     border-collapse: collapse;
   }
   
@@ -96,5 +99,14 @@
     overflow: auto;
     margin: 20px auto;
     border: 1px solid #ddd;
-  }
-  
+  }  
+
+  .table-wrapper {
+    width: 180vh;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.table-wrapper h3{
+  margin-left: 15px;
+}

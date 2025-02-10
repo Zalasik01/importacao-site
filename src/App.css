@@ -1,6 +1,19 @@
 .App {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   padding: 20px;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.card-box {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 body {
@@ -16,14 +29,18 @@ h1 {
 }
 
 label {
-  font-weight: bold;
+  font-weight: 400;
   font-size: 18px;
+  margin-bottom: 5px;
 }
 
 input, select {
-  margin: 10px;
   padding: 8px;
   font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 250px;
 }
 
 select {
@@ -36,6 +53,7 @@ select {
 input[type="text"] {
   width: 250px;
   border-radius: 3px;
+  margin-left: 10px;
   border: none;
   outline: none;
 }
@@ -46,7 +64,20 @@ div {
 
 .versao {
   font-size: 12px;
-  position: absolute;
+  position: fixed;
   bottom: 10px;
   left: 15px;
+  z-index: 9999;
+}
+
+.option-list {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.option-list label {
+  margin-right: 10px;
+  width: 50%;
 }

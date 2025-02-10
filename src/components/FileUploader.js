@@ -210,39 +210,39 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem, mar
       <label htmlFor="file-upload" className="file-label">
         <span>Clique para selecionar um arquivo</span>
       </label>
-
+  
       {file && <p>Arquivo selecionado: {file.name}</p>}
-
+  
       {sheetData.length > 0 && (
-        <div>
-          <h3>Espelho da planilha importada:</h3>
-          <div className="table-container">
-            <table>
-              <thead>
-                <tr>
-                  {columns.map((col, index) => (
-                    <th key={index}>{col}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {sheetData.map((row, rowIndex) => (
-                  <tr key={rowIndex}>
-                    {row.map((cell, cellIndex) => (
-                      <td key={cellIndex}>{cell}</td>
+        <>
+          <button className="convert-button" onClick={handleConvert}>
+            Converter
+          </button>
+  
+          <div className="table-wrapper">  {/* Envolvendo a tabela */}
+            <h3>Espelho da planilha importada:</h3>
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    {columns.map((col, index) => (
+                      <th key={index}>{col}</th>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {sheetData.map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                      {row.map((cell, cellIndex) => (
+                        <td key={cellIndex}>{cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      )}
-
-      {sheetData.length > 0 && (
-        <button className="convert-button" onClick={handleConvert}>
-          Converter
-        </button>
+        </>
       )}
     </div>
   );

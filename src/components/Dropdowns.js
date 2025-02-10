@@ -1,4 +1,5 @@
 import React from "react";
+import './Dropdowns.css';
 
 function Dropdowns({ origem, setOrigem, tipoConversao, setTipoConversao, posicao, setPosicao }) {
   const origens = ["Revenda Mais", "AutoConf", "AutoCerto"];
@@ -6,19 +7,21 @@ function Dropdowns({ origem, setOrigem, tipoConversao, setTipoConversao, posicao
   const posicoes = ["Histórico", "Estoque"];
 
   return (
-    <div>
-      <label>Origem da Planilha:</label>
-      <select value={origem} onChange={(e) => setOrigem(e.target.value)}>
-        <option value="">Selecione...</option>
-        {origens.map((opcao) => (
-          <option key={opcao} value={opcao}>
-            {opcao}
-          </option>
-        ))}
-      </select>
+    <div className="drop">
+      <div>
+        <label>Origem da Planilha:</label>
+        <select value={origem} onChange={(e) => setOrigem(e.target.value)}>
+          <option value="">Selecione...</option>
+          {origens.map((opcao) => (
+            <option key={opcao} value={opcao}>
+              {opcao}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {origem && (
-        <>
+        <div>
           <label>Tipo de Conversão:</label>
           <select value={tipoConversao} onChange={(e) => setTipoConversao(e.target.value)}>
             <option value="">Selecione...</option>
@@ -28,11 +31,11 @@ function Dropdowns({ origem, setOrigem, tipoConversao, setTipoConversao, posicao
               </option>
             ))}
           </select>
-        </>
+        </div>
       )}
 
       {tipoConversao === "Veículos" && (
-        <>
+        <div>
           <label>Posição dos Veículos:</label>
           <select value={posicao} onChange={(e) => setPosicao(e.target.value)}>
             <option value="">Selecione...</option>
@@ -42,7 +45,7 @@ function Dropdowns({ origem, setOrigem, tipoConversao, setTipoConversao, posicao
               </option>
             ))}
           </select>
-        </>
+        </div>
       )}
     </div>
   );
