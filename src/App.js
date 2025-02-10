@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'font-awesome/css/font-awesome.min.css';
 import "./App.css";
+import packageJson from '../package.json';
 
 function App() {
   const [origem, setOrigem] = useState("");
@@ -82,7 +83,9 @@ function App() {
             />
           </>
         )}
-        <p className="versao">Atualizado: 10/02/2025 09:18</p>
+        <p className="versao">
+          Version Build: {new Date(packageJson.buildDate).toLocaleString('en-GB', { timeZone: 'UTC' })}
+        </p>
         <ToastContainer />
       </div>
     </ErrorBoundary>
