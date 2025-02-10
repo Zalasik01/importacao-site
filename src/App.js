@@ -56,17 +56,17 @@ function App() {
         {cnpj && origem && tipoConversao && (
           <>
             {tipoConversao === "Clientes" && (
-              <div className="flag-container">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={marcarFornecedor}
-                    onChange={() => setMarcarFornecedor(!marcarFornecedor)}
-                  />
-                  Marcar como clientes como Fornecedor
-                </label>
-              </div>
-            )}
+            <div className="flag-container">
+              <label title="Ao marcar esse checkbox a coluna Fornecedor será marcada automaticamente">
+                <input
+                  type="checkbox"
+                  checked={marcarFornecedor}
+                  onChange={() => setMarcarFornecedor(!marcarFornecedor)}
+                />
+                Fornecedor
+              </label>
+            </div>
+          )}
             <FileUploader 
               file={file} 
               setFile={setFile} 
@@ -82,7 +82,7 @@ function App() {
             />
           </>
         )}
-        <p className="versao">Atualizado: 10/02/2025 09:11</p>
+        <p className="versao">Atualizado: 10/02/2025 09:18</p>
         <ToastContainer />
       </div>
     </ErrorBoundary>
