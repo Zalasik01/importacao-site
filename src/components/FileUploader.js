@@ -4,7 +4,7 @@ import * as XLSX from 'xlsx';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem }) {
+function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem, marcarFornecedor }) {
   const [sheetData, setSheetData] = useState([]);
   const [columns, setColumns] = useState([]);
 
@@ -176,7 +176,7 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem }) {
         "Tipo Telefone 2": tipoTelefone2Field,
         "Telefone3": telefone3Field,
         "Tipo Telefone 3": tipoTelefone3Field,
-        "Fornecedor": ""
+        "Fornecedor": marcarFornecedor ? "Sim" : ""
       };
     });
   };

@@ -91,7 +91,7 @@
   
   .table-container {
     width: 90%;
-    max-width: 1200px;
+    max-width: 200vh;
     height: 400px;
     overflow: auto;
     margin: 20px auto;

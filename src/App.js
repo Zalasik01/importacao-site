@@ -16,12 +16,14 @@ function App() {
   const [file, setFile] = useState(null);
   const [sheetData, setSheetData] = useState([]);
   const [columns, setColumns] = useState([]);
+  const [marcarFornecedor, setMarcarFornecedor] = useState(false);
 
   useEffect(() => {
     setFile(null);
     setSheetData([]);
     setColumns([]);
   }, [origem, tipoConversao, posicao]);
+
   useEffect(() => {
     document.title = "Altimus - Conversão de Planilhas";
   }, []);
@@ -36,7 +38,7 @@ function App() {
     autoClose: 5000, 
     theme: "dark", 
     hideProgressBar: true
-  });  
+  });
 
   return (
     <ErrorBoundary>
@@ -52,18 +54,33 @@ function App() {
         />
         {origem && <CNPJInput cnpj={cnpj} setCNPJ={setCNPJ} />}
         {cnpj && origem && tipoConversao && (
-          <FileUploader 
-            file={file} 
-            setFile={setFile} 
-            cnpj={cnpj} 
-            posicao={posicao} 
-            tipoConversao={tipoConversao}
-            origem={origem} 
-            setSheetData={setSheetData} 
-            setColumns={setColumns}
-            notifyConverting={notifyConverting}
-            notifyDownloadReady={notifyDownloadReady}
-          />
+          <>
+            {tipoConversao === "Clientes" && (
+              <div className="flag-container">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={marcarFornecedor}
+                    onChange={() => setMarcarFornecedor(!marcarFornecedor)}
+                  />
+                  Marcar como clientes como Fornecedor
+                </label>
+              </div>
+            )}
+            <FileUploader 
+              file={file} 
+              setFile={setFile} 
+              cnpj={cnpj} 
+              posicao={posicao} 
+              tipoConversao={tipoConversao}
+              origem={origem} 
+              setSheetData={setSheetData} 
+              setColumns={setColumns}
+              notifyConverting={notifyConverting}
+              notifyDownloadReady={notifyDownloadReady}
+              marcarFornecedor={marcarFornecedor}
+            />
+          </>
         )}
         <p className="versao">Atualizado: 10/02/2025 08:46</p>
         <ToastContainer />
