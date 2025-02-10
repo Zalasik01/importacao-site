@@ -82,7 +82,7 @@ function App() {
             />
           </>
         )}
-        <p className="versao">Atualizado: 10/02/2025 08:46</p>
+        <p className="versao">Atualizado: 10/02/2025 09:11</p>
         <ToastContainer />
       </div>
     </ErrorBoundary>
