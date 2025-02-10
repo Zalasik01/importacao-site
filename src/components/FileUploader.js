@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './FileUploader.css';
 import * as XLSX from 'xlsx';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function FileUploader({ cnpj, file, setFile, posicao }) {
+function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem }) {
   const [sheetData, setSheetData] = useState([]);
   const [columns, setColumns] = useState([]);
 
@@ -38,10 +40,37 @@ function FileUploader({ cnpj, file, setFile, posicao }) {
     reader.readAsBinaryString(file);
   };
 
-  const handleConvert = () => {
-    const payload = mapSheetDataToPayload();
-    generateExcel(payload);
-  };
+  const handleConvert = async () => {
+    if (!file) {
+      toast.error("Nenhuma planilha indexada. Por favor, envie uma planilha.", { 
+        autoClose: 1000, 
+        theme: "dark", 
+        hideProgressBar: true
+      });
+      return;
+    }
+  
+    toast.info("Conversão da planilha iniciada...", { 
+      autoClose: 1000, 
+      theme: "dark", 
+      hideProgressBar: true
+    });
+  
+    let payload;
+  
+    if (tipoConversao === "Clientes" && origem === "Revenda Mais") {
+      payload = await mapSheetDataToPayloadClientes();
+    } else {
+      payload = await mapSheetDataToPayload();
+    }
+  
+    generateExcel(payload, cnpj);
+    toast.success("Planilha convertida e pronta para download!", { 
+      autoClose: 1000, 
+      theme: "dark", 
+      hideProgressBar: true
+    });
+};
 
 
   const mapSheetDataToPayload = () => {
@@ -97,19 +126,62 @@ function FileUploader({ cnpj, file, setFile, posicao }) {
     });
   };
 
-  const generateExcel = (payload) => {
+  const mapSheetDataToPayloadClientes = () => {
+    return sheetData.map((row) => {
+      const sexoValor = row[columns.indexOf("sexo")];
+      const sexo = sexoValor && sexoValor.charAt(0).toUpperCase();
+      const sexoFinal = sexo === "M" || sexo === "F" ? sexo : "O";
+
+      const pessoa = isNaN(row[columns.indexOf("cpf_cnpj")]) ? "Física" : "Jurídica";
+
+      const cepValor = row[columns.indexOf("cep")] || "";
+      const cep = cepValor.replace("-", "");
+
+      return {
+        "Cod": "",
+        "Pessoa": pessoa,
+        "Sexo": sexoFinal,
+        "Nome Completo": row[columns.indexOf("nome")],
+        "Apelido": row[columns.indexOf("apelido")],
+        "CPFCNPJ": row[columns.indexOf("cpf_cnpj")],
+        "Email": row[columns.indexOf("email")],
+        "Cep": cep,
+        "Rua": row[columns.indexOf("rua")],
+        "Numero": row[columns.indexOf("numero")],
+        "Complemento": row[columns.indexOf("complemento")],
+        "Bairro": row[columns.indexOf("bairro")],
+        "Cidade": row[columns.indexOf("cidade")],
+        "UF": row[columns.indexOf("estado")],
+        "Data Nascimento": row[columns.indexOf("data_nascimento")],
+        "IE/RG": row[columns.indexOf("rg")] || row[columns.indexOf("ie")],
+        "Telefone1": row[columns.indexOf("telefone_celular")],
+        "Tipo Telefone 1": "Celular",
+        "Telefone 2": row[columns.indexOf("telefone_residencial")],
+        "Tipo Telefone 2": "Residencial",
+        "Telefone3": row[columns.indexOf("telefone_comercial")],
+        "Tipo Telefone 3": "Comercial",
+        "Fornecedor": ""
+      };
+    });
+  };
+
+  const generateExcel = async (payload, cnpj) => {
     const ws = XLSX.utils.json_to_sheet(payload);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Output');
-
+  
     const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
     const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-
+  
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
+    const fileName = `Exportacao_${tipoConversao}_${posicao}_${formattedDate}_${cnpj}.xlsx`;
+  
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'output.xlsx';
+    link.download = fileName;
     link.click();
-  };
+  };  
 
   return (
     <div className="file-upload-container">
@@ -120,7 +192,7 @@ function FileUploader({ cnpj, file, setFile, posicao }) {
         onChange={handleFileChange}
       />
       <label htmlFor="file-upload" className="file-label">
-        <span>Arraste ou clique para selecionar um arquivo</span>
+        <span>Clique para selecionar um arquivo</span>
       </label>
 
       {file && <p>Arquivo selecionado: {file.name}</p>}
