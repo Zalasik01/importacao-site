@@ -137,6 +137,22 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem }) {
       const cepValor = row[columns.indexOf("cep")] || "";
       const cep = cepValor.replace("-", "");
 
+      const telefone1 = row[columns.indexOf("telefone_celular")] || "";
+      const telefone2 = row[columns.indexOf("telefone_residencial")] || "";
+      const telefone3 = row[columns.indexOf("telefone_comercial")] || "";
+
+      const telefone1Field = telefone1 ? telefone1 : undefined;
+      const tipoTelefone1Field = telefone1 ? "Celular" : undefined;
+
+      const telefone2Field = telefone2 ? telefone2 : undefined;
+      const tipoTelefone2Field = telefone2 ? "Celular" : undefined;
+
+      const telefone3Field = telefone3 ? telefone3 : undefined;
+      const tipoTelefone3Field = telefone3 ? "Celular" : undefined;
+
+      const ruaValor = row[columns.indexOf("rua")] || "";
+      const rua = ruaValor.split(",")[0].trim();
+
       return {
         "Cod": "",
         "Pessoa": pessoa,
@@ -146,7 +162,7 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem }) {
         "CPFCNPJ": row[columns.indexOf("cpf_cnpj")],
         "Email": row[columns.indexOf("email")],
         "Cep": cep,
-        "Rua": row[columns.indexOf("rua")],
+        "Rua": rua,
         "Numero": row[columns.indexOf("numero")],
         "Complemento": row[columns.indexOf("complemento")],
         "Bairro": row[columns.indexOf("bairro")],
@@ -154,12 +170,12 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem }) {
         "UF": row[columns.indexOf("estado")],
         "Data Nascimento": row[columns.indexOf("data_nascimento")],
         "IE/RG": row[columns.indexOf("rg")] || row[columns.indexOf("ie")],
-        "Telefone1": row[columns.indexOf("telefone_celular")],
-        "Tipo Telefone 1": "Celular",
-        "Telefone 2": row[columns.indexOf("telefone_residencial")],
-        "Tipo Telefone 2": "Residencial",
-        "Telefone3": row[columns.indexOf("telefone_comercial")],
-        "Tipo Telefone 3": "Comercial",
+        "Telefone1": telefone1Field,
+        "Tipo Telefone 1": tipoTelefone1Field,
+        "Telefone 2": telefone2Field,
+        "Tipo Telefone 2": tipoTelefone2Field,
+        "Telefone3": telefone3Field,
+        "Tipo Telefone 3": tipoTelefone3Field,
         "Fornecedor": ""
       };
     });

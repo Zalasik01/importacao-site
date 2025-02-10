@@ -65,7 +65,7 @@ function App() {
             notifyDownloadReady={notifyDownloadReady}
           />
         )}
-        <p className="versao">Atualizado: 10/02/2025 08:32</p>
+        <p className="versao">Atualizado: 10/02/2025 08:46</p>
         <ToastContainer />
       </div>
     </ErrorBoundary>
