@@ -3,7 +3,7 @@ import './Dropdowns.css';
 
 function Dropdowns({ origem, setOrigem, tipoConversao, setTipoConversao, posicao, setPosicao }) {
   const origens = ["Revenda Mais", "AutoConf", "AutoCerto"];
-  const tiposConversao = ["Clientes", "Veículos"];
+  const tiposConversao = ["Clientes", "Veículos", "Titulos Financeiros"];
   const posicoes = ["Histórico", "Estoque"];
 
   return (

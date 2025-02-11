@@ -60,9 +60,12 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem, mar
   
     if (tipoConversao === "Clientes" && origem === "Revenda Mais") {
       payload = await mapSheetDataToPayloadClientes();
+    } else if (tipoConversao === "Títulos Financeiros") {
+      payload = await mapSheetDataToPayloadTitulos();
     } else {
       payload = await mapSheetDataToPayload();
     }
+    
   
     generateExcel(payload, cnpj);
     toast.success("Planilha convertida e pronta para download!", { 
@@ -180,6 +183,15 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem, mar
       };
     });
   };
+
+  const mapSheetDataToPayloadTitulos = () => {
+    return sheetData.map((row) => {
+      return {
+        "OPERAÇÃO": row[columns.indexOf("Operação")]       
+      };
+    });
+  };
+  
 
   const generateExcel = async (payload, cnpj) => {
     const ws = XLSX.utils.json_to_sheet(payload);
