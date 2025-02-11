@@ -119,7 +119,7 @@ function App() {
             className="help-modal"
             overlayClassName="help-overlay"
           >
-            <h2>Como usar</h2>
+            <h2 className="modal-title">Como usar</h2>
             <p>Utilize essa aplicação para fazer conversão de planilhas de outros sistemas para o sistema Altimus</p>
             <ul>
               <li>Selecione o programa de Origem (Revenda Mais, Auto-Conf, Boom Sistemas).</li>
