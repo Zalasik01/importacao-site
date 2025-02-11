@@ -199,10 +199,10 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem, mar
         "DESCRIÇÃO": row[columns.indexOf("Descrição")],
         "VALOR TOTAL": row[columns.indexOf("Valor título")],
         "QUITADO": row[columns.indexOf("Data pagamento/recebimento")] ? "true" : "false",
-        "CONTA": "",
-        "CONTA FINANCEIRA": "",
+        "CONTA": "t_conta | Pode ser solicitada para o N2",
+        "CONTA FINANCEIRA": "t_conta_financeira | Pode ser solicitada para o N2",
         "FORMA DE PAGAMENTO": row[columns.indexOf("Forma pagamento/recebimento")],
-        "DATA QUITACAO": "",
+        "DATA QUITACAO": row[columns.indexOf("Data pagamento/recebimento")]? row[columns.indexOf("Data pagamento/recebimento")] + " 00:00:00" : "",
       };
     });
   };   
