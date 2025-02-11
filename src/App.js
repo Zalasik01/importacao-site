@@ -109,7 +109,7 @@ function App() {
             Version Build: {new Date(packageJson.buildDate).toLocaleString('en-GB', { timeZone: 'UTC' })}
           </p>
 
-          <button className="help-button" onClick={openHelpModal}>
+          <button className="help-button shadow" onClick={openHelpModal}>
             <FaQuestionCircle /> Ajuda
           </button>
           <Modal 
