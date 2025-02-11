@@ -118,6 +118,7 @@ function App() {
             contentLabel="Ajuda"
             className="help-modal"
             overlayClassName="help-overlay"
+            closeTimeoutMS={300}
           >
             <h2 className="modal-title">Como usar</h2>
             <p>Utilize essa aplicação para fazer conversão de planilhas de outros sistemas para o sistema Altimus</p>
@@ -132,6 +133,7 @@ function App() {
             </ul>
             <button onClick={closeHelpModal} className="modal-button">Fechar</button>
           </Modal>
+
         </div>
       </div>
       <ToastContainer />

@@ -106,21 +106,25 @@ input[type="text"] {
   border-radius: 8px;
 }
 
+/* Modal invisível no início */
 .help-modal {
   background-color: #f5eeff;
   padding: 20px;
   border-radius: 8px;
   max-width: 800px;
-  width: 80%; 
+  width: 80%;
   position: fixed;
-  top: 50%; 
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%) scale(0.95);
   z-index: 1000;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border: 1px solid #6e0ad6;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+/* Overlay invisível no início */
 .help-overlay {
   position: fixed;
   top: 0;
@@ -129,7 +133,28 @@ input[type="text"] {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  margin-bottom: 0px !important;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Quando o modal estiver visível */
+.ReactModal__Overlay--after-open {
+  opacity: 1 !important;
+}
+
+.ReactModal__Content--after-open {
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Quando o modal estiver fechando */
+.ReactModal__Overlay--before-close {
+  opacity: 0 !important;
+}
+
+.ReactModal__Content--before-close {
+  opacity: 0 !important;
+  transform: translate(-50%, -50%) scale(0.95);
 }
 
 .modal-button {
