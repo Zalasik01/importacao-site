@@ -11,3 +11,17 @@ React: Para construção da interface interativa.
 XLSX: Para manipulação de arquivos Excel.
 React Toastify: Para notificações e alertas durante o processo de conversão.
 CSS: Para estilização da interface de usuário.
+
+
+Como Rodar o Projeto
+Clone este repositório:
+git clone https://github.com/Zalasik01/importacao-site.git
+
+Navegue até o diretório do projeto:
+cd importacao-site
+
+Instale as dependências:
+npm install
+
+Execute a aplicação:
+npm start
