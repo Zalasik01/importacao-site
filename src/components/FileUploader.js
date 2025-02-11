@@ -58,15 +58,14 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem, mar
   
     let payload;
   
-    if (tipoConversao === "Clientes" && origem === "Revenda Mais") {
-      payload = await mapSheetDataToPayloadClientes();
-    } else if (tipoConversao === "Títulos Financeiros") {
-      payload = await mapSheetDataToPayloadTitulos();
+    if (tipoConversao === "Titulos Financeiros" && origem === "Revenda Mais") {
+      payload = mapSheetDataToPayloadTitulosFinanceiros();
+    } else if (tipoConversao === "Clientes" && origem === "Revenda Mais") {
+      payload = mapSheetDataToPayloadClientes();
     } else {
-      payload = await mapSheetDataToPayload();
+      payload = mapSheetDataToPayload();
     }
     
-  
     generateExcel(payload, cnpj);
     toast.success("Planilha convertida e pronta para download!", { 
       autoClose: 1000, 
@@ -74,7 +73,6 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem, mar
       hideProgressBar: true
     });
 };
-
 
   const mapSheetDataToPayload = () => {
     return sheetData.map((row) => {
@@ -184,14 +182,30 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem, mar
     });
   };
 
-  const mapSheetDataToPayloadTitulos = () => {
+  const mapSheetDataToPayloadTitulosFinanceiros = () => {
     return sheetData.map((row) => {
+      const documentoFornecedorCliente = row[columns.indexOf("Documento Fornecedor/cliente")] || "00.000.000/0000-00";
       return {
-        "OPERAÇÃO": row[columns.indexOf("Operação")]       
+        "id_titulo_financeiro": "",
+        "CNPJ REVENDA": cnpj,
+        "OPERAÇÃO":
+          row[columns.indexOf("Operação")] === "Pagar" ? "PAGAR" : 
+          row[columns.indexOf("Operação")] === "Receber" ? "RECEBER" :
+          row[columns.indexOf("Operação")],
+        "DATA EMISSÃO": row[columns.indexOf("Data emissão")],
+        "DATA VENCIMENTO": row[columns.indexOf("Data vencimento")],
+        "NOME/RAZÃO SOCIAL CLIENTE/FORNECEDOR": row[columns.indexOf("Cliente/Fornecedor")],
+        "CPF/CNPJ CLIENTE/FORNECEDOR": documentoFornecedorCliente,
+        "DESCRIÇÃO": row[columns.indexOf("Descrição")],
+        "VALOR TOTAL": row[columns.indexOf("Valor título")],
+        "QUITADO": row[columns.indexOf("Data pagamento/recebimento")] ? "true" : "false",
+        "CONTA": "",
+        "CONTA FINANCEIRA": "",
+        "FORMA DE PAGAMENTO": row[columns.indexOf("Forma pagamento/recebimento")],
+        "DATA QUITACAO": "",
       };
     });
-  };
-  
+  };   
 
   const generateExcel = async (payload, cnpj) => {
     const ws = XLSX.utils.json_to_sheet(payload);
