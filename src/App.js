@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'font-awesome/css/font-awesome.min.css';
 import "./App.css";
 import packageJson from '../package.json';
+import Modal from 'react-modal';
+import { FaQuestionCircle } from 'react-icons/fa';
 
 function App() {
   const [origem, setOrigem] = useState("");
@@ -17,6 +19,7 @@ function App() {
   const [sheetData, setSheetData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [marcarFornecedor, setMarcarFornecedor] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado do modal
 
   useEffect(() => {
     setFile(null);
@@ -40,13 +43,16 @@ function App() {
     hideProgressBar: true
   });
 
+  const openHelpModal = () => setIsModalOpen(true); // Abrir o modal
+  const closeHelpModal = () => setIsModalOpen(false); // Fechar o modal
+
   return (
     <ErrorBoundary>
       <div className="App">
-      <div className="card-box">
-        <div className="card-box-title">
-        <h1>Site para conversão de planilha - Altimus</h1>
-        </div>
+        <div className="card-box">
+          <div className="card-box-title">
+            <h1>Site para conversão de planilha - Altimus</h1>
+          </div>
           <Dropdowns
             origem={origem}
             setOrigem={setOrigem}
@@ -99,12 +105,36 @@ function App() {
             </>
           )}
 
-      <p className="versao">
-        Version Build: {new Date(packageJson.buildDate).toLocaleString('en-GB', { timeZone: 'UTC' })}
-      </p>
+          <p className="versao">
+            Version Build: {new Date(packageJson.buildDate).toLocaleString('en-GB', { timeZone: 'UTC' })}
+          </p>
+
+          <button className="help-button" onClick={openHelpModal}>
+            <FaQuestionCircle /> Ajuda
+          </button>
+          <Modal 
+            isOpen={isModalOpen} 
+            onRequestClose={closeHelpModal} 
+            contentLabel="Ajuda"
+            className="help-modal"
+            overlayClassName="help-overlay"
+          >
+            <h2>Como usar</h2>
+            <p>Utilize essa aplicação para fazer conversão de planilhas de outros sistemas para o sistema Altimus</p>
+            <ul>
+              <li>Selecione o programa de Origem (Revenda Mais, Auto-Conf, Boom Sistemas).</li>
+              <li>Selecione o tipo de Importação (Clientes, Veículos, Titulos Financeiros).</li>
+              <li>Após isso preencha o CNPJ da revenda (Utilizado para preencher os campos de CNPJ dentro da planilha de destino).</li>
+              <li>Após a importação, verifique a planilha no <strong>"Espelho"</strong> que é apresentado.</li>
+              <li>Caso esteja tudo certo, basta clicar em <strong>Converter</strong>.</li>
+              <hr></hr>
+              <li>Para Tipo de Importação Clientes, existe uma checkbox de <strong>"Fornecedor"</strong> com essa opção marcada a coluna é marcada como <strong>"Sim"</strong> para todos os registros.</li>
+            </ul>
+            <button onClick={closeHelpModal} className="modal-button">Fechar</button>
+          </Modal>
+        </div>
+      </div>
       <ToastContainer />
-    </div>
-    </div>
     </ErrorBoundary>
   );
 }

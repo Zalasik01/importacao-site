@@ -80,3 +80,73 @@ div {
   margin-right: 10px;
   width: 50%;
 }
+
+/* Modal */
+.help-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #0092FF;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 999;
+  transition: background-color 0.3s ease, border-radius 0.3s ease, color 0.3s ease;
+}
+
+.help-button:hover {
+  background-color: #0275cc;
+  color: #d1d1d1;
+  border-radius: 8px;
+}
+
+
+.help-modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 80%; 
+  position: fixed;
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.help-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  margin-bottom: 0px !important;
+}
+
+
+.modal-button {
+  background-color: #6e0ad6;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-button:hover {
+  background-color: #ff5e00;
+  color: white;
+}
+
+li {
+  list-style: decimal-leading-zero;
+}
