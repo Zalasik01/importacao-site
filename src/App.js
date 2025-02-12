@@ -106,7 +106,7 @@ function App() {
           )}
 
           <p className="versao">
-            Version: {new Date(packageJson.buildDate).toLocaleString('en-GB', { timeZone: 'UTC' })}
+            Versão: {new Date(packageJson.buildDate).toLocaleString('en-GB', { timeZone: 'UTC' })}
           </p>
 
           <button className="help-button shadow" onClick={openHelpModal}>
