@@ -2,7 +2,7 @@ import React from "react";
 import './Dropdowns.css';
 
 function Dropdowns({ origem, setOrigem, tipoConversao, setTipoConversao, posicao, setPosicao }) {
-  const origens = ["Revenda Mais", "AutoConf", "AutoCerto"];
+  const origens = ["Revenda Mais", "AutoConf", "AutoCerto", "Generico"];
   const tiposConversao = ["Clientes", "Veículos", "Titulos Financeiros"];
   const posicoes = ["Histórico", "Estoque"];
 

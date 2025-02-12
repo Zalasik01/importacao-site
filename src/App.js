@@ -43,8 +43,8 @@ function App() {
     hideProgressBar: true
   });
 
-  const openHelpModal = () => setIsModalOpen(true); // Abrir o modal
-  const closeHelpModal = () => setIsModalOpen(false); // Fechar o modal
+  const openHelpModal = () => setIsModalOpen(true);
+  const closeHelpModal = () => setIsModalOpen(false);
 
   return (
     <ErrorBoundary>
@@ -106,7 +106,7 @@ function App() {
           )}
 
           <p className="versao">
-            Version Build: {new Date(packageJson.buildDate).toLocaleString('en-GB', { timeZone: 'UTC' })}
+            Version: {new Date(packageJson.buildDate).toLocaleString('en-GB', { timeZone: 'UTC' })}
           </p>
 
           <button className="help-button shadow" onClick={openHelpModal}>
