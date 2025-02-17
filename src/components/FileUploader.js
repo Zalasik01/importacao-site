@@ -131,59 +131,62 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem, mar
   };
 
   const mapSheetDataToPayloadClientes = () => {
-    return sheetData.map((row) => {
-      const sexoValor = row[columns.indexOf("sexo")];
-      const sexo = sexoValor && sexoValor.charAt(0).toUpperCase();
-      const sexoFinal = sexo === "M" || sexo === "F" ? sexo : "O";
-
-      const pessoa = isNaN(row[columns.indexOf("cpf_cnpj")]) ? "Física" : "Jurídica";
-
-      const cepValor = row[columns.indexOf("cep")] || "";
-      const cep = cepValor.replace("-", "");
-
-      const telefone1 = row[columns.indexOf("telefone_celular")] || "";
-      const telefone2 = row[columns.indexOf("telefone_residencial")] || "";
-      const telefone3 = row[columns.indexOf("telefone_comercial")] || "";
-
-      const telefone1Field = telefone1 ? telefone1 : undefined;
-      const tipoTelefone1Field = telefone1 ? "Celular" : undefined;
-
-      const telefone2Field = telefone2 ? telefone2 : undefined;
-      const tipoTelefone2Field = telefone2 ? "Celular" : undefined;
-
-      const telefone3Field = telefone3 ? telefone3 : undefined;
-      const tipoTelefone3Field = telefone3 ? "Celular" : undefined;
-
-      const ruaValor = row[columns.indexOf("rua")] || "";
-      const rua = ruaValor.split(",")[0].trim();
-
-      return {
-        "Cod": "",
-        "Pessoa": pessoa,
-        "Sexo": sexoFinal,
-        "Nome Completo": row[columns.indexOf("nome")],
-        "Apelido": row[columns.indexOf("apelido")],
-        "CPFCNPJ": row[columns.indexOf("cpf_cnpj")],
-        "Email": row[columns.indexOf("email")],
-        "Cep": cep,
-        "Rua": rua,
-        "Numero": row[columns.indexOf("numero")],
-        "Complemento": row[columns.indexOf("complemento")],
-        "Bairro": row[columns.indexOf("bairro")],
-        "Cidade": row[columns.indexOf("cidade")],
-        "UF": row[columns.indexOf("estado")],
-        "Data Nascimento": row[columns.indexOf("data_nascimento")],
-        "IE/RG": row[columns.indexOf("rg")] || row[columns.indexOf("ie")],
-        "Telefone1": telefone1Field,
-        "Tipo Telefone 1": tipoTelefone1Field,
-        "Telefone 2": telefone2Field,
-        "Tipo Telefone 2": tipoTelefone2Field,
-        "Telefone3": telefone3Field,
-        "Tipo Telefone 3": tipoTelefone3Field,
-        "Fornecedor": marcarFornecedor ? "Sim" : ""
-      };
-    });
+    return sheetData
+      .filter((row) => row.some((cell) => cell !== null && cell !== undefined && cell !== "")) // Remove linhas vazias
+      .map((row) => {
+        const sexoValor = row[columns.indexOf("sexo")];
+        const sexo = sexoValor && sexoValor.charAt(0).toUpperCase();
+        const sexoFinal = sexo === "M" || sexo === "F" ? sexo : "O";
+  
+        const pessoa = isNaN(row[columns.indexOf("cpf_cnpj")]) ? "Física" : "Jurídica";
+  
+        const cepValor = String(row[columns.indexOf("cep")] || "");
+        const cep = cepValor.replace("-", "");
+  
+        const telefone1 = row[columns.indexOf("telefone_celular")] || "";
+        const telefone2 = row[columns.indexOf("telefone_residencial")] || "";
+        const telefone3 = row[columns.indexOf("telefone_comercial")] || "";
+  
+        const telefone1Field = telefone1 ? telefone1 : undefined;
+        const tipoTelefone1Field = telefone1 ? "Celular" : undefined;
+  
+        const telefone2Field = telefone2 ? telefone2 : undefined;
+        const tipoTelefone2Field = telefone2 ? "Celular" : undefined;
+  
+        const telefone3Field = telefone3 ? telefone3 : undefined;
+        const tipoTelefone3Field = telefone3 ? "Celular" : undefined;
+  
+        const ruaValor = row[columns.indexOf("rua")] || "";
+        const rua = ruaValor.split(",")[0].trim();
+  
+        return {
+          "Cod": "",
+          "Pessoa": row[columns.indexOf("pessoa")],
+          "Sexo": sexoFinal,
+          "Nome Completo": row[columns.indexOf("nome")],
+          "Apelido": row[columns.indexOf("apelido")],
+          "CPFCNPJ": row[columns.indexOf("cpf_cnpj")],
+          "Email": row[columns.indexOf("email")],
+          "Cep": cep,
+          "Rua": rua,
+          "Numero": row[columns.indexOf("numero")],
+          "Complemento": row[columns.indexOf("complemento")],
+          "Bairro": row[columns.indexOf("bairro")],
+          "Cidade": row[columns.indexOf("cidade")],
+          "UF": row[columns.indexOf("estado")],
+          "Data Nascimento": row[columns.indexOf("data_nascimento")],
+          "IE/RG": row[columns.indexOf("rg")] || row[columns.indexOf("ie")],
+          "Telefone1": telefone1Field,
+          "Tipo Telefone 1": tipoTelefone1Field,
+          "Telefone 2": telefone2Field,
+          "Tipo Telefone 2": tipoTelefone2Field,
+          "Telefone3": telefone3Field,
+          "Tipo Telefone 3": tipoTelefone3Field,
+          "Fornecedor": marcarFornecedor ? "Sim" : ""
+        };
+      });
   };
+  
 
   const mapSheetDataToPayloadTitulosFinanceiros = () => {
     return sheetData.map((row) => {
