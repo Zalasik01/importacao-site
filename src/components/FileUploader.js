@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './FileUploader.css';
 import * as XLSX from 'xlsx';
 import { ToastContainer, toast } from 'react-toastify';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import 'react-toastify/dist/ReactToastify.css';
 
 function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem, marcarFornecedor }) {
@@ -62,6 +63,8 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem, mar
       payload = mapSheetDataToPayloadTitulosFinanceiros();
     } else if (tipoConversao === "Clientes" && origem === "Revenda Mais") {
       payload = mapSheetDataToPayloadClientes();
+    } else if (tipoConversao === "Receitas e Despesas Veículos" && origem === "Revenda Mais") {
+      payload = mapSheetDataToPayloadRdv();
     } else {
       payload = mapSheetDataToPayload();
     }
@@ -203,6 +206,15 @@ function FileUploader({ cnpj, file, setFile, posicao, tipoConversao, origem, mar
         "CONTA FINANCEIRA": "t_conta_financeira | Pode ser solicitada para o N2",
         "FORMA DE PAGAMENTO": row[columns.indexOf("Forma pagamento/recebimento")],
         "DATA QUITACAO": row[columns.indexOf("Data pagamento/recebimento")]? row[columns.indexOf("Data pagamento/recebimento")] + " 00:00:00" : "",
+      };
+    });
+  };   
+
+  const mapSheetDataToPayloadRdv = () => {
+    return sheetData.map((row) => {
+      return {
+        "id_receita_despesa_veiculo": "",
+        "TIPO": "",
       };
     });
   };   

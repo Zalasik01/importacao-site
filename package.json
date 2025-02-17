@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@vercel/speed-insights": "^1.2.0",
     "cnpj": "^5.0.0",
     "cra-template": "1.2.0",
     "font-awesome": "^4.7.0",
