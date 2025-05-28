@@ -43,7 +43,6 @@
   color: #6e0ad6;
 }
 
-
 .convert-button {
   background-color: #6e0ad6;
   color: #fff;
@@ -82,7 +81,8 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   padding: 8px;
   text-align: left;
   border: 1px solid #ddd;
@@ -93,15 +93,15 @@ th {
 }
 
 .table-container {
-  width: 90%;
+  width: 100%;
   max-width: 200vh;
   height: 700px;
   overflow: auto;
   margin: 20px auto;
   border: 1px solid #ddd;
-  border-radius: 10px;
+  border-radius: 3px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}  
+}
 
 .table-wrapper {
   width: 180vh;
@@ -110,9 +110,10 @@ th {
   position: relative;
   top: 90px;
   border-radius: 10px;
+  z-index: 999;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.table-wrapper h3{
-margin-left: 15px;
+.table-wrapper h3 {
+  margin-left: 15px;
 }
