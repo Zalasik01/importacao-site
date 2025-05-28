@@ -121,13 +121,8 @@ function App() {
           )}
 
           <p className="versao" aria-label="Versão do sistema">
-            Versão: {packageJson.version}{" "}
-            {packageJson.buildDate && (
-              <>
-                - Build:{" "}
-                {new Date(packageJson.buildDate).toLocaleString("pt-BR")}
-              </>
-            )}
+            Versão:
+            <>{new Date(packageJson.buildDate).toLocaleString("pt-BR")}</>
           </p>
 
           <button
