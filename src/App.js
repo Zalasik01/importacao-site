@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Dropdowns from "./components/Dropdowns";
 import FileUploader from "./components/FileUploader";
@@ -20,6 +20,7 @@ function App() {
   const [columns, setColumns] = useState([]);
   const [marcarFornecedor, setMarcarFornecedor] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalRef = useRef(null);
 
   useEffect(() => {
     setFile(null);
@@ -30,6 +31,12 @@ function App() {
   useEffect(() => {
     document.title = "Altimus - Conversão de Planilhas";
   }, []);
+
+  useEffect(() => {
+    if (isModalOpen && modalRef.current) {
+      modalRef.current.focus();
+    }
+  }, [isModalOpen]);
 
   const notifyConverting = () =>
     toast.info("Conversão da planilha iniciada...", {
@@ -53,7 +60,7 @@ function App() {
       <div className="App">
         <div className="card-box">
           <div className="card-box-title">
-            <h1>Site para conversão de planilha - Altimus</h1>
+            <h1 tabIndex={0}>Site para conversão de planilha - Altimus</h1>
           </div>
           <Dropdowns
             origem={origem}
@@ -65,8 +72,9 @@ function App() {
           />
           {origem && tipoConversao && (
             <div>
-              <label>CNPJ da Revenda</label>
+              <label htmlFor="cnpj-input">CNPJ da Revenda</label>
               <input
+                id="cnpj-input"
                 type="text"
                 value={cnpj}
                 onChange={(e) => {
@@ -74,6 +82,9 @@ function App() {
                   setCNPJ(rawCNPJ);
                 }}
                 placeholder="Digite o CNPJ (somente números)"
+                aria-label="CNPJ da Revenda"
+                autoComplete="off"
+                maxLength={14}
               />
             </div>
           )}
@@ -86,7 +97,9 @@ function App() {
                       type="checkbox"
                       checked={marcarFornecedor}
                       onChange={() => setMarcarFornecedor(!marcarFornecedor)}
+                      className="checkbox"
                     />
+                    <span className="custom-checkbox" aria-hidden="true"></span>
                     Fornecedor
                   </label>
                 </div>
@@ -107,13 +120,21 @@ function App() {
             </>
           )}
 
-          <p className="versao">
-            Versão:
-            {packageJson.buildDate &&
-              new Date(packageJson.buildDate).toLocaleString("pt-BR")}
+          <p className="versao" aria-label="Versão do sistema">
+            Versão: {packageJson.version}{" "}
+            {packageJson.buildDate && (
+              <>
+                - Build:{" "}
+                {new Date(packageJson.buildDate).toLocaleString("pt-BR")}
+              </>
+            )}
           </p>
 
-          <button className="help-button shadow" onClick={openHelpModal}>
+          <button
+            className="help-button shadow"
+            onClick={openHelpModal}
+            aria-label="Abrir ajuda"
+          >
             <FaQuestionCircle /> Ajuda
           </button>
           <Modal
@@ -123,43 +144,50 @@ function App() {
             className="help-modal"
             overlayClassName="help-overlay"
             closeTimeoutMS={300}
+            ariaHideApp={false}
           >
-            <h2 className="modal-title">Como usar</h2>
-            <p>
-              Utilize essa aplicação para fazer conversão de planilhas de outros
-              sistemas para o sistema Altimus
-            </p>
-            <ul>
-              <li>
-                Selecione o programa de Origem (Revenda Mais, Auto-Conf, Boom
-                Sistemas).
-              </li>
-              <li>
-                Selecione o tipo de Importação (Clientes, Veículos, Titulos
-                Financeiros).
-              </li>
-              <li>
-                Após isso preencha o CNPJ da revenda (Utilizado para preencher
-                os campos de CNPJ dentro da planilha de destino).
-              </li>
-              <li>
-                Após a importação, verifique a planilha no{" "}
-                <strong>"Espelho"</strong> que é apresentado.
-              </li>
-              <li>
-                Caso esteja tudo certo, basta clicar em{" "}
-                <strong>Converter</strong>.
-              </li>
-              <hr></hr>
-              <li>
-                Para Tipo de Importação Clientes, existe uma checkbox de{" "}
-                <strong>"Fornecedor"</strong> com essa opção marcada a coluna é
-                marcada como <strong>"Sim"</strong> para todos os registros.
-              </li>
-            </ul>
-            <button onClick={closeHelpModal} className="modal-button">
-              Fechar
-            </button>
+            <div tabIndex={-1} ref={modalRef}>
+              <h2 className="modal-title">Como usar</h2>
+              <p>
+                Utilize essa aplicação para fazer conversão de planilhas de
+                outros sistemas para o sistema Altimus
+              </p>
+              <ul>
+                <li>
+                  Selecione o programa de Origem (Revenda Mais, Auto-Conf, Boom
+                  Sistemas).
+                </li>
+                <li>
+                  Selecione o tipo de Importação (Clientes, Veículos, Titulos
+                  Financeiros).
+                </li>
+                <li>
+                  Após isso preencha o CNPJ da revenda (Utilizado para preencher
+                  os campos de CNPJ dentro da planilha de destino).
+                </li>
+                <li>
+                  Após a importação, verifique a planilha no{" "}
+                  <strong>"Espelho"</strong> que é apresentado.
+                </li>
+                <li>
+                  Caso esteja tudo certo, basta clicar em{" "}
+                  <strong>Converter</strong>.
+                </li>
+                <hr />
+                <li>
+                  Para Tipo de Importação Clientes, existe uma checkbox de{" "}
+                  <strong>"Fornecedor"</strong> com essa opção marcada a coluna
+                  é marcada como <strong>"Sim"</strong> para todos os registros.
+                </li>
+              </ul>
+              <button
+                onClick={closeHelpModal}
+                className="modal-button"
+                autoFocus
+              >
+                Fechar
+              </button>
+            </div>
           </Modal>
         </div>
       </div>

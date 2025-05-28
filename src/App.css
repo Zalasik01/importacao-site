@@ -7,12 +7,13 @@
 }
 
 .shadow {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(110, 10, 214, 0.08);
 }
 
 .card-box {
   width: 100%;
   max-width: 800px;
+  min-width: 320px;
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
@@ -20,168 +21,246 @@
 }
 
 body {
-  background-color: #f5eeff;
   margin: 0;
+  background: #f5eeff;
 }
 
 h1 {
+  font-size: 2rem;
   color: #6e0ad6;
-  text-transform: uppercase;
-  cursor: pointer;
-  text-shadow: 3px 3px 5px #f5eeff;
+  margin-bottom: 24px;
 }
 
 label {
-  font-weight: 400;
-  font-size: 18px;
-  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
 }
 
 input,
 select {
+  font-size: 1rem;
   padding: 8px;
-  font-size: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
+  border: 1px solid #d1c4e9;
+  margin-bottom: 10px;
+  margin-top: 4px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 select {
-  width: 200px;
-  border-radius: 3px;
-  border: none;
-  outline: none;
+  cursor: pointer;
 }
 
 input[type="text"] {
-  width: 250px;
-  border-radius: 3px;
-  margin-left: 10px;
-  border: none;
-  outline: none;
+  letter-spacing: 1px;
 }
-
-/* div {
-  margin-bottom: 20px;
-} */
 
 .versao {
   font-size: 12px;
   position: fixed;
   bottom: 10px;
   left: 15px;
+  background: #f5eeff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: #6e0ad6;
+  box-shadow: 0 2px 6px rgba(110, 10, 214, 0.05);
+  z-index: 100;
 }
 
 .option-list {
-  width: 100%;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .option-list label {
-  margin-right: 10px;
-  width: 50%;
+  font-weight: 400;
+  color: #444;
 }
 
 /* Modal */
 .help-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #0092ff;
-  color: white;
+  background: #6e0ad6;
+  color: #fff;
   border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  font-size: 20px;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
   cursor: pointer;
-  z-index: 999;
-  transition: background-color 0.3s ease, border-radius 0.3s ease,
-    color 0.3s ease;
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
 }
 
-.help-button:hover {
-  background-color: #0275cc;
-  color: #d1d1d1;
-  border-radius: 8px;
+.help-button:hover,
+.help-button:focus {
+  background: #4b078f;
+  outline: 2px solid #6e0ad6;
 }
 
-/* Modal invisível no início */
 .help-modal {
-  background-color: #f5eeff;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 800px;
-  width: 80%;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.95);
-  z-index: 1000;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 1px solid #6e0ad6;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  background: #fff;
+  border-radius: 10px;
+  padding: 24px;
+  max-width: 480px;
+  width: 90vw;
+  margin: auto;
+  position: relative;
+  top: 10vh;
+  box-shadow: 0 6px 24px rgba(110, 10, 214, 0.15);
+  outline: none;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-/* Overlay invisível no início */
 .help-overlay {
+  background: rgba(110, 10, 214, 0.08);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 /* Quando o modal estiver visível */
 .ReactModal__Overlay--after-open {
-  opacity: 1 !important;
+  opacity: 1;
+  transition: opacity 300ms;
 }
 
 .ReactModal__Content--after-open {
-  opacity: 1 !important;
-  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition: opacity 300ms;
 }
 
 /* Quando o modal estiver fechando */
 .ReactModal__Overlay--before-close {
-  opacity: 0 !important;
+  opacity: 0;
 }
 
 .ReactModal__Content--before-close {
-  opacity: 0 !important;
-  transform: translate(-50%, -50%) scale(0.95);
+  opacity: 0;
 }
 
 .modal-button {
-  background-color: #6e0ad6;
+  background: #6e0ad6;
   color: #fff;
-  font-size: 16px;
-  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
   cursor: pointer;
-  margin-top: 20px;
-  transition: background-color 0.3s ease;
+  margin-top: 18px;
+  transition: background 0.2s;
 }
 
-.modal-button:hover {
-  background-color: #ff5e00;
-  color: white;
+.modal-button:hover,
+.modal-button:focus {
+  background: #4b078f;
+  outline: 2px solid #6e0ad6;
 }
 
 li {
-  list-style: decimal-leading-zero;
+  margin-bottom: 8px;
 }
 
 .modal-title {
-  font-weight: 500;
-  text-transform: uppercase;
-  text-align: center;
-  justify-content: center;
+  color: #6e0ad6;
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 600px) {
+  .card-box {
+    padding: 8px;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  .help-modal {
+    width: 98vw;
+    max-width: 98vw;
+    padding: 8px;
+  }
+}
+
+/* .flag-container label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox {
+  width: 22px;
+  height: 22px;
+  transform: scale(1);
+  accent-color: #6e0ad6;
+  margin-right: 8px;
+  vertical-align: middle;
+  margin-top: 0;
+  margin-bottom: 0;
+} */
+
+.flag-container label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox {
+  /* Esconde o checkbox padrão, mas mantém acessível */
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.custom-checkbox {
+  width: 26px;
+  height: 26px;
+  border: 2px solid #6e0ad6;
+  border-radius: 6px;
+  display: inline-block;
+  position: relative;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px rgba(110, 10, 214, 0.08);
+}
+
+.flag-container label:focus-within .custom-checkbox {
+  box-shadow: 0 0 0 2px #b39ddb;
+}
+
+.custom-checkbox::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 2px;
+  width: 7px;
+  height: 14px;
+  border-right: 3px solid #6e0ad6;
+  border-bottom: 3px solid #6e0ad6;
+  opacity: 0;
+  transform: scale(0.5) rotate(0deg);
+  transition: opacity 0.25s cubic-bezier(0.4, 2, 0.6, 1),
+    transform 0.4s cubic-bezier(0.4, 2, 0.6, 1);
+}
+
+.checkbox:checked + .custom-checkbox {
+  border-color: #6e0ad6;
+  background: #f5eeff;
+}
+
+.checkbox:checked + .custom-checkbox::after {
+  opacity: 1;
+  transform: scale(1) rotate(36deg);
 }
