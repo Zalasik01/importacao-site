@@ -18,6 +18,7 @@
     "xlsx": "^0.18.5"
   },
   "scripts": {
+    "prebuild": "node set-build-date.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
