@@ -29,6 +29,8 @@ h1 {
   font-size: 2rem;
   color: #6e0ad6;
   margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
 }
 
 label {
