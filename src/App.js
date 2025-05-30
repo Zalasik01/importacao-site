@@ -8,7 +8,7 @@ import "font-awesome/css/font-awesome.min.css";
 import "./App.css";
 import packageJson from "../package.json";
 import Modal from "react-modal";
-import { FaQuestionCircle } from "react-icons/fa";
+import { FaQuestionCircle, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 function App() {
   const [origem, setOrigem] = useState("");
@@ -55,6 +55,21 @@ function App() {
   const openHelpModal = () => setIsModalOpen(true);
   const closeHelpModal = () => setIsModalOpen(false);
 
+  function formatCNPJ(value) {
+    const v = value.replace(/\D/g, "").slice(0, 14);
+    if (v.length <= 2) return v;
+    if (v.length <= 5) return v.replace(/^(\d{2})(\d+)/, "$1.$2");
+    if (v.length <= 8) return v.replace(/^(\d{2})(\d{3})(\d+)/, "$1.$2.$3");
+    if (v.length <= 12)
+      return v.replace(/^(\d{2})(\d{3})(\d{3})(\d+)/, "$1.$2.$3/$4");
+    return v.replace(
+      /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{0,2}).*/,
+      "$1.$2.$3/$4-$5"
+    );
+  }
+
+  const isCNPJValid = cnpj.length === 14;
+
   return (
     <ErrorBoundary>
       <div className="App">
@@ -71,12 +86,12 @@ function App() {
             setPosicao={setPosicao}
           />
           {origem && tipoConversao && (
-            <div>
+            <div style={{ position: "relative" }}>
               <label htmlFor="cnpj-input">CNPJ da Revenda</label>
               <input
                 id="cnpj-input"
                 type="text"
-                value={cnpj}
+                value={formatCNPJ(cnpj)}
                 onChange={(e) => {
                   const rawCNPJ = e.target.value.replace(/\D/g, "");
                   setCNPJ(rawCNPJ);
@@ -84,8 +99,39 @@ function App() {
                 placeholder="Digite o CNPJ (somente números)"
                 aria-label="CNPJ da Revenda"
                 autoComplete="off"
-                maxLength={14}
+                maxLength={18}
+                style={{
+                  paddingRight: "34px",
+                }}
               />
+              {cnpj.length > 0 &&
+                (isCNPJValid ? (
+                  <FaCheckCircle
+                    className="cnpj-icon"
+                    style={{
+                      color: "#2ecc40",
+                      position: "absolute",
+                      right: "10px",
+                      top: "30px",
+                      fontSize: "1.3em",
+                      pointerEvents: "none",
+                      background: "transparent",
+                    }}
+                  />
+                ) : (
+                  <FaTimesCircle
+                    className="cnpj-icon invalid"
+                    style={{
+                      color: "#e74c3c",
+                      position: "absolute",
+                      right: "10px",
+                      top: "30px",
+                      fontSize: "1.3em",
+                      pointerEvents: "none",
+                      background: "transparent",
+                    }}
+                  />
+                ))}
             </div>
           )}
           {cnpj && origem && tipoConversao && (
@@ -120,7 +166,7 @@ function App() {
             </>
           )}
 
-          <p className="versao" aria-label="Versão do sistema">
+          <p className="versao" aria-label="Versão:">
             Versão:
             <>{new Date(packageJson.buildDate).toLocaleString("pt-BR")}</>
           </p>
