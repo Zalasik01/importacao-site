@@ -14,18 +14,16 @@ function App() {
   const [origem, setOrigem] = useState("");
   const [tipoConversao, setTipoConversao] = useState("");
   const [posicao, setPosicao] = useState("");
+  const [tipoFonte, setTipoFonte] = useState(""); // Planilha ou JSON para veículos
   const [cnpj, setCNPJ] = useState("");
   const [file, setFile] = useState(null);
-  const [sheetData, setSheetData] = useState([]);
-  const [columns, setColumns] = useState([]);
   const [marcarFornecedor, setMarcarFornecedor] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef(null);
 
   useEffect(() => {
     setFile(null);
-    setSheetData([]);
-    setColumns([]);
+    setTipoFonte("");
   }, [origem, tipoConversao, posicao]);
 
   useEffect(() => {
@@ -84,6 +82,8 @@ function App() {
             setTipoConversao={setTipoConversao}
             posicao={posicao}
             setPosicao={setPosicao}
+            tipoFonte={tipoFonte}
+            setTipoFonte={setTipoFonte}
           />
           {origem && tipoConversao && (
             <div style={{ position: "relative" }}>
@@ -134,7 +134,8 @@ function App() {
                 ))}
             </div>
           )}
-          {cnpj && origem && tipoConversao && (
+          {cnpj && origem && tipoConversao && 
+           (tipoConversao !== "Veículos" || (tipoConversao === "Veículos" && posicao && tipoFonte)) && (
             <>
               {tipoConversao === "Clientes" && (
                 <div className="flag-container">
@@ -157,11 +158,10 @@ function App() {
                 posicao={posicao}
                 tipoConversao={tipoConversao}
                 origem={origem}
-                setSheetData={setSheetData}
-                setColumns={setColumns}
                 notifyConverting={notifyConverting}
                 notifyDownloadReady={notifyDownloadReady}
                 marcarFornecedor={marcarFornecedor}
+                tipoFonte={tipoFonte}
               />
             </>
           )}

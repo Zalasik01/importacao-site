@@ -8,6 +8,8 @@ function Dropdowns({
   setTipoConversao,
   posicao,
   setPosicao,
+  tipoFonte,
+  setTipoFonte,
 }) {
   const origens = ["Revenda Mais", "AutoConf", "AutoCerto", "Generico"];
   const tiposConversao = [
@@ -15,9 +17,9 @@ function Dropdowns({
     "Veículos",
     "Titulos Financeiros",
     "Receitas e Despesas Veículos",
-    "Link JSON",
   ];
   const posicoes = ["Histórico", "Estoque"];
+  const tiposFonte = ["Planilha", "JSON"];
 
   const posicaoRef = useRef(null);
 
@@ -99,6 +101,24 @@ function Dropdowns({
           >
             <option value="">Selecione...</option>
             {posicoes.map((opcao) => (
+              <option key={opcao} value={opcao}>
+                {opcao}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {tipoConversao === "Veículos" && posicao && (
+        <div>
+          <label htmlFor="tipo-fonte">Fonte dos Dados:</label>
+          <select
+            id="tipo-fonte"
+            value={tipoFonte}
+            onChange={(e) => setTipoFonte(e.target.value)}
+          >
+            <option value="">Selecione...</option>
+            {tiposFonte.map((opcao) => (
               <option key={opcao} value={opcao}>
                 {opcao}
               </option>

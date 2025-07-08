@@ -120,6 +120,88 @@
   transform: none;
 }
 
+/* JSON Options */
+.json-options {
+  margin: 15px 0;
+  text-align: center;
+}
+
+.toggle-json-button {
+  background-color: #2196f3;
+  color: white;
+  font-size: 14px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-json-button:hover:not(:disabled) {
+  background-color: #1976d2;
+}
+
+.toggle-json-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* JSON Textarea */
+.json-textarea-container {
+  margin-top: 15px;
+}
+
+.json-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  resize: vertical;
+  min-height: 200px;
+  transition: border-color 0.3s ease;
+}
+
+.json-textarea:focus {
+  outline: none;
+  border-color: #6e0ad6;
+  box-shadow: 0 0 0 3px rgba(110, 10, 214, 0.1);
+}
+
+.json-textarea:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.process-json-button {
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.process-json-button:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.process-json-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.process-json-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
 /* Planilha */
 
 .file-upload-container {
