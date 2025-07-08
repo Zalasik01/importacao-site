@@ -566,7 +566,7 @@ td:hover {
   word-wrap: break-word;
   width: 100%;
   min-height: 60px;
-  max-height: 300px;
+  max-height: 80vh;
   overflow-y: auto;
   overflow-x: auto;
   padding: 4px;
