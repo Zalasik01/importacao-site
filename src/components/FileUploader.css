@@ -292,8 +292,6 @@ th {
   border-radius: 10px;
   z-index: 999;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  height: calc(100vh - 150px);
-  min-height: 70vh;
   display: flex;
   flex-direction: column;
 }
@@ -369,11 +367,6 @@ th {
     height: 100%;
   }
 
-  .table-wrapper {
-    height: calc(100vh - 130px);
-    min-height: 60vh;
-  }
-
   .table-header {
     flex-direction: column;
     gap: 10px;
@@ -411,11 +404,6 @@ th {
     max-width: 100vw;
     height: calc(100vh - 160px);
     min-height: 45vh;
-  }
-
-  .table-wrapper {
-    height: calc(100vh - 110px);
-    min-height: 55vh;
   }
 
   th,
