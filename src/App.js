@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
-import ErrorBoundary from "./components/ErrorBoundary";
-import Dropdowns from "./components/Dropdowns";
-import FileUploader from "./components/FileUploader";
+import "font-awesome/css/font-awesome.min.css";
+import { useEffect, useRef, useState } from "react";
+import { FaCheckCircle, FaQuestionCircle, FaTimesCircle } from "react-icons/fa";
+import Modal from "react-modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "font-awesome/css/font-awesome.min.css";
-import "./App.css";
 import packageJson from "../package.json";
-import Modal from "react-modal";
-import { FaQuestionCircle, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import "./App.css";
+import Dropdowns from "./components/Dropdowns";
+import ErrorBoundary from "./components/ErrorBoundary";
+import FileUploader from "./components/FileUploader";
 
 function App() {
   const [origem, setOrigem] = useState("");
@@ -23,7 +23,10 @@ function App() {
 
   useEffect(() => {
     setFile(null);
-    setTipoFonte("");
+    // Só limpar tipoFonte se não for veículos, para preservar a seleção JSON
+    if (tipoConversao !== "Veículos") {
+      setTipoFonte("");
+    }
   }, [origem, tipoConversao, posicao]);
 
   useEffect(() => {
@@ -134,37 +137,43 @@ function App() {
                 ))}
             </div>
           )}
-          {cnpj && origem && tipoConversao && 
-           (tipoConversao !== "Veículos" || (tipoConversao === "Veículos" && posicao && tipoFonte)) && (
-            <>
-              {tipoConversao === "Clientes" && (
-                <div className="flag-container">
-                  <label title="Ao marcar esse checkbox a coluna Fornecedor será marcada automaticamente">
-                    <input
-                      type="checkbox"
-                      checked={marcarFornecedor}
-                      onChange={() => setMarcarFornecedor(!marcarFornecedor)}
-                      className="checkbox"
-                    />
-                    <span className="custom-checkbox" aria-hidden="true"></span>
-                    Fornecedor
-                  </label>
-                </div>
-              )}
-              <FileUploader
-                file={file}
-                setFile={setFile}
-                cnpj={cnpj}
-                posicao={posicao}
-                tipoConversao={tipoConversao}
-                origem={origem}
-                notifyConverting={notifyConverting}
-                notifyDownloadReady={notifyDownloadReady}
-                marcarFornecedor={marcarFornecedor}
-                tipoFonte={tipoFonte}
-              />
-            </>
-          )}
+          {cnpj &&
+            origem &&
+            tipoConversao &&
+            (tipoConversao !== "Veículos" ||
+              (tipoConversao === "Veículos" && posicao && tipoFonte)) && (
+              <>
+                {tipoConversao === "Clientes" && (
+                  <div className="flag-container">
+                    <label title="Ao marcar esse checkbox a coluna Fornecedor será marcada automaticamente">
+                      <input
+                        type="checkbox"
+                        checked={marcarFornecedor}
+                        onChange={() => setMarcarFornecedor(!marcarFornecedor)}
+                        className="checkbox"
+                      />
+                      <span
+                        className="custom-checkbox"
+                        aria-hidden="true"
+                      ></span>
+                      Fornecedor
+                    </label>
+                  </div>
+                )}
+                <FileUploader
+                  file={file}
+                  setFile={setFile}
+                  cnpj={cnpj}
+                  posicao={posicao}
+                  tipoConversao={tipoConversao}
+                  origem={origem}
+                  notifyConverting={notifyConverting}
+                  notifyDownloadReady={notifyDownloadReady}
+                  marcarFornecedor={marcarFornecedor}
+                  tipoFonte={tipoFonte}
+                />
+              </>
+            )}
 
           <p className="versao" aria-label="Versão:">
             Versão:

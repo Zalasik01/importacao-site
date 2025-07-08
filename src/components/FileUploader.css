@@ -259,3 +259,51 @@ th {
 .table-wrapper h3 {
   margin-left: 15px;
 }
+
+/* JSON Action Buttons */
+.json-action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.json-action-buttons .convert-button,
+.json-action-buttons .generate-sheet-button {
+  flex: 1;
+  min-width: 150px;
+}
+
+.generate-sheet-button {
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.generate-sheet-button:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.generate-sheet-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Responsividade para botões */
+@media (max-width: 480px) {
+  .json-action-buttons {
+    flex-direction: column;
+  }
+  
+  .json-action-buttons .convert-button,
+  .json-action-buttons .generate-sheet-button {
+    width: 100%;
+    min-width: unset;
+  }
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "id": 2412407,
+    "anoFabricacao": 2013,
+    "anoModelo": 2014,
+    "km": 12321,
+    "portas": 4,
+    "valorVenda": 250000,
+    "dataEntradaEstoque": "Nov 21, 2024 11:25:47 AM",
+    "dataAtualizacao": "Jul 8, 2025 11:33:03 AM",
+    "filialApelido": "1- Altimus Financeira",
+    "tipo": "Carro/Camioneta",
+    "marca": "BMW",
+    "modelo": "320i",
+    "versao": "2.0 Turbo/ActiveFlex 16V/GP 4",
+    "cidade": "Blumenau",
+    "cor": "Cinza",
+    "combustivel": "Álcool/Gasolina",
+    "motor": "B4290640",
+    "observacao": "Veículo NOVO\tOpcionais: Apoio de Braço | Ar Condicionado Dual Zone | Bancos Elétricos em Couro | Airbag de Joelho | Ar Condicionado | ABS | Janela Basculante | Lona Marítima | Faróis de neblina | Controle Som no Volante | CD player | Cabine Estendida.",
+    "placa": "KPZ4G52",
+    "potencia": "184",
+    "cilindrada": "1997",
+    "cambio": "Câmbio automático",
+    "categoria": "Esportivo",
+    "opcionais": [
+      "Apoio de Braço",
+      "Ar Condicionado Dual Zone",
+      "Bancos Elétricos em Couro",
+      "Airbag de Joelho",
+      "Ar Condicionado",
+      "ABS",
+      "Janela Basculante",
+      "Lona Marítima",
+      "Faróis de neblina",
+      "Controle Som no Volante",
+      "CD player",
+      "Cabine Estendida"
+    ],
+    "fotos": [
+      "https://s3.amazonaws.com/altimus2.arquivos.prod/5c0e681e-4e50-4955-80ee-9982c65fd15f/fotos/veiculo/0bac62b84f9d4014bd3d00eff1e65421_1732188558474.jpg"
+    ],
+    "informacoesAdicionais": {
+      "Garantia": "Sim",
+      "Recibo Entregue": "não"
+    },
+    "destaque": 0,
+    "chassi": "9991781088"
+  }
+]

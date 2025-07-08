@@ -1,0 +1,72 @@
+{
+  "veiculos": [
+    {
+      "marca": "FIAT",
+      "modelo": "UNO",
+      "versao": "MILLE FIRE",
+      "ano": 2010,
+      "cor": "BRANCA",
+      "combustivel": "FLEX",
+      "cambio": "Manual",
+      "kilometragem": 85000,
+      "portas": 4,
+      "preco": 15000,
+      "data_cadastro": "2024-01-15T10:30:00Z",
+      "data_atualizacao": "2024-01-15T14:20:00Z",
+      "imagens": [
+        "https://exemplo.com/img1.jpg",
+        "https://exemplo.com/img2.jpg"
+      ]
+    },
+    {
+      "marca": "VOLKSWAGEN",
+      "modelo": "GOL",
+      "versao": "1.0 CITY",
+      "ano": 2015,
+      "cor": "PRATA",
+      "combustivel": "FLEX",
+      "cambio": "Câmbio Automático CVT",
+      "kilometragem": 45000,
+      "portas": 4,
+      "preco": 28000,
+      "data_cadastro": "15/01/2024 09:15:30",
+      "data_atualizacao": "15/01/2024 16:45:22",
+      "imagens": ["https://exemplo.com/gol1.jpg"]
+    },
+    {
+      "marca": "CHEVROLET",
+      "modelo": "ONIX",
+      "ano": 2020,
+      "cor": "AZUL",
+      "combustivel": "FLEX",
+      "cambio": "Automatico",
+      "kilometragem": 25000,
+      "portas": 4,
+      "preco": 45000,
+      "data_cadastro": "2024-01-15",
+      "data_atualizacao": "2024-01-15",
+      "fotos": [
+        "https://exemplo.com/onix1.jpg",
+        "https://exemplo.com/onix2.jpg",
+        "https://exemplo.com/onix3.jpg"
+      ]
+    },
+    {
+      "MARCA": "HONDA",
+      "MODELO": "CIVIC",
+      "VERSAO": "EXL",
+      "ANO": 2018,
+      "COR": "PRETO",
+      "COMBUSTIVEL": "FLEX",
+      "CAMBIO": "CVT",
+      "KM": 35000,
+      "PORTAS": 4,
+      "VALOR": 75000,
+      "CADASTRO": "2024-01-15T08:00:00.000Z",
+      "ATUALIZADO": "2024-01-15T17:30:00.000Z",
+      "IMAGES": [
+        "https://exemplo.com/civic1.jpg"
+      ]
+    }
+  ]
+}
