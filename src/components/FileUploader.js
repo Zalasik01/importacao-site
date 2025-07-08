@@ -380,6 +380,37 @@ function FileUploader({
       throw error;
     }
   };
+  // Função para formatar JSON na tabela
+  const formatTableJson = () => {
+    if (!sheetData || sheetData.length === 0) return;
+    
+    try {
+      // Formatar os dados da tabela para melhor visualização
+      const formattedData = sheetData.map(row => {
+        return row.map(cell => {
+          if (typeof cell === 'string' && cell.length > 100) {
+            // Se o conteúdo for muito longo, tentar formatá-lo
+            try {
+              // Tentar parsear como JSON e formatar
+              const parsed = JSON.parse(cell);
+              return JSON.stringify(parsed, null, 2);
+            } catch {
+              // Se não for JSON válido, apenas quebrar em linhas menores
+              return cell.replace(/,/g, ',\n').replace(/\{/g, '{\n').replace(/\}/g, '\n}');
+            }
+          }
+          return cell;
+        });
+      });
+      
+      // Atualizar os dados da tabela
+      setSheetData(formattedData);
+      toastSuccess("JSON formatado com sucesso!");
+      
+    } catch (error) {
+      toastError("Erro ao formatar JSON");
+    }
+  };
 
   return (
     <div className="file-upload-container">
@@ -481,37 +512,66 @@ function FileUploader({
           )}
 
           <div className="table-wrapper">
-            <h3>
-              {tipoConversao === "Link JSON" ||
-              (tipoConversao === "Veículos" && tipoFonte === "JSON")
-                ? `Dados do JSON importado: ${sheetData.length} registros`
-                : `Espelho da planilha importada: ${sheetData.length} registros`}
-            </h3>
+            <div className="table-header">
+              <h3>
+                {tipoConversao === "Link JSON" ||
+                (tipoConversao === "Veículos" && tipoFonte === "JSON")
+                  ? `📊 Dados do JSON importado`
+                  : `📄 Espelho da planilha importada`}
+              </h3>
+              <div className="table-info">
+                <span className="record-count">{sheetData.length} registros</span>
+                {tipoConversao === "Veículos" && tipoFonte === "JSON" && (
+                  <div className="json-actions">
+                    <span className="data-source">Origem: JSON</span>
+                    <button 
+                      className="format-json-btn"
+                      onClick={formatTableJson}
+                      title="Formatar JSON na tabela"
+                    >
+                      📝 Formatar JSON
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
             {tipoConversao === "Veículos" && tipoFonte === "JSON" && (
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#666",
-                  marginBottom: "10px",
-                }}
-              >
-                * Antes de realizar a importação verifique as informações
-              </p>
+              <div className="json-info-banner">
+                <div className="info-icon">ℹ️</div>
+                <div className="info-text">
+                  <strong>Atenção</strong>
+                  <br />
+                  <small>
+                    Antes de realizar a importação na base do cliente, verifique
+                    as informações.
+                  </small>
+                </div>
+              </div>
             )}
+
             <div className="table-container">
               <table>
                 <thead>
                   <tr>
                     {columns.map((col, index) => (
-                      <th key={index}>{col}</th>
+                      <th key={index} title={`Campo: ${col}`}>{col}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {sheetData.map((row, rowIndex) => (
-                    <tr key={rowIndex}>
+                    <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'even-row' : 'odd-row'}>
                       {columns.map((_, colIndex) => (
-                        <td key={colIndex}>{row[colIndex]}</td>
+                        <td key={colIndex} title={`Valor: ${row[colIndex]}`}>
+                          {row[colIndex] ? (
+                            <pre className="cell-content">
+                              {String(row[colIndex])}
+                            </pre>
+                          ) : (
+                            <span className="empty-cell">-</span>
+                          )}
+                        </td>
                       ))}
                     </tr>
                   ))}

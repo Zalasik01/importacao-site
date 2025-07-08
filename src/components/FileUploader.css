@@ -231,6 +231,7 @@ table {
   min-width: 800px;
   margin: 0 auto;
   border-collapse: collapse;
+  table-layout: auto;
 }
 
 /* Melhorar a aparência do scroll */
@@ -255,12 +256,15 @@ table {
 
 th,
 td {
-  padding: 4px 8px;
+  padding: 8px;
   text-align: left;
   border: 1px solid #ddd;
-  height: 5px;
-  line-height: 1;
-  font-size: 14px;
+  vertical-align: top;
+  line-height: 1.2;
+  font-size: 12px;
+  word-wrap: break-word;
+  min-width: 150px;
+  min-height: 60px;
 }
 
 th {
@@ -270,13 +274,14 @@ th {
 .table-container {
   width: 70vw;
   max-width: 70vw;
-  height: 50vh;
-  max-height: 50vh;
+  height: calc(100vh - 200px);
+  min-height: 60vh;
   overflow-x: auto;
   overflow-y: auto;
   border: 1px solid #ddd;
   border-radius: 3px;
   margin: 0 auto;
+  flex: 1;
 }
 
 .table-wrapper {
@@ -287,6 +292,10 @@ th {
   border-radius: 10px;
   z-index: 999;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  height: calc(100vh - 150px);
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .table-wrapper h3 {
@@ -352,15 +361,47 @@ th {
   .table-container {
     width: 95vw;
     max-width: 95vw;
-    height: 45vh;
-    max-height: 45vh;
+    height: calc(100vh - 180px);
+    min-height: 50vh;
   }
-  
+
+  table {
+    height: 100%;
+  }
+
+  .table-wrapper {
+    height: calc(100vh - 130px);
+    min-height: 60vh;
+  }
+
+  .table-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .table-info {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .json-actions {
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+  }
+
+  .format-json-btn {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+
   th,
   td {
     font-size: 12px;
     padding: 3px 6px;
-    height: 4px;
+    min-height: 40px;
   }
 }
 
@@ -368,14 +409,210 @@ th {
   .table-container {
     width: 100vw;
     max-width: 100vw;
-    height: 40vh;
-    max-height: 40vh;
+    height: calc(100vh - 160px);
+    min-height: 45vh;
   }
-  
+
+  .table-wrapper {
+    height: calc(100vh - 110px);
+    min-height: 55vh;
+  }
+
   th,
   td {
     font-size: 11px;
     padding: 2px 4px;
-    height: 3px;
+    min-height: 30px;
   }
+}
+
+/* Estilos para melhorar a apresentação da tabela */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-bottom: 2px solid #6e0ad6;
+  padding-bottom: 10px;
+}
+
+.table-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.table-info {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.record-count {
+  background-color: #6e0ad6;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.data-source {
+  background-color: #e8f4f8;
+  color: #2c5aa0;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.json-info-banner {
+  background: #f3e5f5;
+  border: 1px solid #6e0ad6;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 300px;
+  margin-left: 10px;
+}
+
+.info-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.info-text {
+  flex: 1;
+}
+
+.info-text strong {
+  color: #6e0ad6;
+  font-size: 14px;
+}
+
+.info-text small {
+  color: #666;
+  font-size: 12px;
+}
+
+/* Melhorias na tabela */
+.even-row {
+  background-color: #f9f9f9;
+}
+
+.odd-row {
+  background-color: white;
+}
+
+.even-row:hover,
+.odd-row:hover {
+  background-color: #f0e6ff;
+}
+
+.empty-cell {
+  color: #999;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+th {
+  background-color: #6e0ad6 !important;
+  color: white !important;
+  font-weight: bold;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+th:hover {
+  background-color: #4b078f !important;
+}
+
+td {
+  transition: background-color 0.2s ease;
+}
+
+td:hover {
+  background-color: #f0e6ff !important;
+}
+
+/* Novos estilos para o botão Formatar JSON */
+.json-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.format-json-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.format-json-btn:hover {
+  background-color: #218838;
+}
+
+.format-json-btn:active {
+  transform: scale(0.95);
+}
+
+/* Estilos para conteúdo formatado das células */
+.cell-content {
+  font-family: "Courier New", Monaco, monospace;
+  font-size: 11px;
+  line-height: 1.3;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  width: 100%;
+  min-height: 60px;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 4px;
+  margin: 0;
+  background-color: #f8f9fa;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+/* Célula que contém conteúdo formatado */
+td:has(.cell-content) {
+  padding: 4px;
+  width: auto;
+  min-width: 200px;
+}
+
+/* Fallback para navegadores que não suportam :has() */
+td .cell-content {
+  display: block;
+}
+
+.cell-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.cell-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.cell-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
+}
+
+.cell-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
