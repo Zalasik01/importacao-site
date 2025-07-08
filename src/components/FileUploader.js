@@ -328,8 +328,12 @@ function FileUploader({
 
     try {
       // Gerar payload mapeado usando o DataConverter
-      const payload = DataConverter.convertJsonToVeiculos(jsonData, posicao, cnpj);
-      
+      const payload = DataConverter.convertJsonToVeiculos(
+        jsonData,
+        posicao,
+        cnpj
+      );
+
       // Gerar nome de arquivo específico para planilha mapeada
       const now = new Date();
       const formattedDate = `${now.getFullYear()}${String(
@@ -337,7 +341,7 @@ function FileUploader({
       ).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}_${String(
         now.getHours()
       ).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}`;
-      
+
       const fileName = `Planilha_Mapeada_JSON_${posicao}_${formattedDate}_${cnpj}.xlsx`;
 
       const result = await ExcelUtils.generateExcelFile(payload, fileName);
@@ -345,7 +349,9 @@ function FileUploader({
         `Planilha mapeada gerada: ${result.fileName} com ${result.recordCount} registros`
       );
 
-      toastSuccess(`Planilha mapeada gerada com sucesso! ${result.recordCount} registros processados.`);
+      toastSuccess(
+        `Planilha mapeada gerada com sucesso! ${result.recordCount} registros processados.`
+      );
     } catch (error) {
       console.error("Erro ao gerar planilha mapeada:", error);
       toastError("Erro ao gerar planilha mapeada do JSON.");
@@ -489,8 +495,7 @@ function FileUploader({
                   marginBottom: "10px",
                 }}
               >
-                * Objetos complexos são achatados para visualização. A conversão
-                final irá mapear os campos corretamente.
+                * Antes de realizar a importação verifique as informações
               </p>
             )}
             <div className="table-container">

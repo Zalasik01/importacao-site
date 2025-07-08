@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -44,8 +43,6 @@ select {
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #d1c4e9;
-  margin-bottom: 10px;
-  margin-top: 4px;
   width: 100%;
   box-sizing: border-box;
 }
