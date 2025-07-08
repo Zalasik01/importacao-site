@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import "./Dropdowns.css";
 
 function Dropdowns({
@@ -15,6 +15,7 @@ function Dropdowns({
     "Veículos",
     "Titulos Financeiros",
     "Receitas e Despesas Veículos",
+    "Link JSON",
   ];
   const posicoes = ["Histórico", "Estoque"];
 

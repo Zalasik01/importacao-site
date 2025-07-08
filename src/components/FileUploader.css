@@ -60,6 +60,66 @@
   color: white;
 }
 
+/* JSON URL Container */
+.json-url-container {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.url-input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+
+.json-url-input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.json-url-input:focus {
+  outline: none;
+  border-color: #6e0ad6;
+  box-shadow: 0 0 0 3px rgba(110, 10, 214, 0.1);
+}
+
+.json-url-input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.visualizar-button {
+  background-color: #6e0ad6;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.visualizar-button:hover:not(:disabled) {
+  background-color: #ff5e00;
+}
+
+.visualizar-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.visualizar-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
 /* Planilha */
 
 .file-upload-container {

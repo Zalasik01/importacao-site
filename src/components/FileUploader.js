@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./FileUploader.css";
 import * as XLSX from "xlsx";
 import { toast } from "react-toastify";
@@ -79,6 +79,19 @@ function FileUploader({
   const [sheetData, setSheetData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [jsonUrl, setJsonUrl] = useState("");
+  const [jsonData, setJsonData] = useState([]);
+
+  // Limpar dados quando o tipo de conversão mudar
+  useEffect(() => {
+    setSheetData([]);
+    setColumns([]);
+    setJsonUrl("");
+    setJsonData([]);
+    if (setFile) {
+      setFile(null);
+    }
+  }, [tipoConversao, setFile]);
 
   const toastError = (msg) =>
     toast.error(msg, {
@@ -106,6 +119,50 @@ function FileUploader({
       closeButton: true,
       hideProgressBar: false,
     });
+
+  const handleJsonUrlChange = (event) => {
+    setJsonUrl(event.target.value);
+  };
+
+  const handleVisualizarJson = async () => {
+    if (!jsonUrl.trim()) {
+      toastError("Por favor, insira uma URL válida.");
+      return;
+    }
+
+    setLoading(true);
+    toastInfo("Carregando dados do JSON...");
+
+    try {
+      const response = await fetch(jsonUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (Array.isArray(data) && data.length > 0) {
+        // Extrair as colunas do primeiro objeto
+        const firstItem = data[0];
+        const columns = Object.keys(firstItem);
+        
+        // Converter os dados para o formato da tabela
+        const rows = data.map(item => columns.map(col => item[col] || ""));
+        
+        setColumns(columns);
+        setJsonData(data);
+        setSheetData(rows);
+        toastSuccess("Dados JSON carregados com sucesso!");
+      } else {
+        toastError("O JSON deve conter um array de objetos com dados.");
+      }
+    } catch (error) {
+      console.error("Erro ao carregar JSON:", error);
+      toastError("Erro ao carregar dados do JSON. Verifique a URL e tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -167,9 +224,16 @@ function FileUploader({
   };
 
   const handleConvert = async () => {
-    if (!file) {
-      toastError(MESSAGES.noSheet);
-      return;
+    if (tipoConversao === "Link JSON") {
+      if (jsonData.length === 0) {
+        toastError("Por favor, carregue dados do JSON primeiro usando o botão 'Visualizar'.");
+        return;
+      }
+    } else {
+      if (!file) {
+        toastError(MESSAGES.noSheet);
+        return;
+      }
     }
 
     setLoading(true);
@@ -178,7 +242,10 @@ function FileUploader({
     try {
       let payload;
 
-      if (origem === "Revenda Mais") {
+      if (tipoConversao === "Link JSON") {
+        // Para Link JSON, usar os dados JSON diretamente
+        payload = jsonData;
+      } else if (origem === "Revenda Mais") {
         if (tipoConversao === "Titulos Financeiros") {
           payload = mapSheetDataToPayloadTitulosFinanceiros(
             sheetData,
@@ -238,7 +305,13 @@ function FileUploader({
     ).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}_${String(
       now.getHours()
     ).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}`;
-    const fileName = `Exportacao_${tipoConversao}_${posicao}_${formattedDate}_${cnpj}.xlsx`;
+    
+    let fileName;
+    if (tipoConversao === "Link JSON") {
+      fileName = `Exportacao_JSON_${formattedDate}_${cnpj}.xlsx`;
+    } else {
+      fileName = `Exportacao_${tipoConversao}_${posicao}_${formattedDate}_${cnpj}.xlsx`;
+    }
 
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
@@ -248,24 +321,49 @@ function FileUploader({
 
   return (
     <div className="file-upload-container">
-      <input
-        type="file"
-        id="file-upload"
-        className="file-input"
-        onChange={handleFileChange}
-        aria-label="Selecionar arquivo Excel"
-        disabled={loading}
-      />
-      <label
-        htmlFor="file-upload"
-        className="file-label"
-        tabIndex={0}
-        aria-label="Clique para selecionar um arquivo"
-      >
-        <span>Clique para selecionar um arquivo</span>
-      </label>
+      {tipoConversao === "Link JSON" ? (
+        <div className="json-url-container">
+          <div className="url-input-group">
+            <input
+              type="url"
+              placeholder="https://exemplo.com/dados.json"
+              value={jsonUrl}
+              onChange={handleJsonUrlChange}
+              className="json-url-input"
+              disabled={loading}
+            />
+            <button
+              className="visualizar-button"
+              onClick={handleVisualizarJson}
+              disabled={loading || !jsonUrl.trim()}
+              aria-busy={loading}
+            >
+              {loading ? "Carregando..." : "Visualizar"}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <input
+            type="file"
+            id="file-upload"
+            className="file-input"
+            onChange={handleFileChange}
+            aria-label="Selecionar arquivo Excel"
+            disabled={loading}
+          />
+          <label
+            htmlFor="file-upload"
+            className="file-label"
+            tabIndex={0}
+            aria-label="Clique para selecionar um arquivo"
+          >
+            <span>Clique para selecionar um arquivo</span>
+          </label>
 
-      {file && <p>Arquivo selecionado: {file.name}</p>}
+          {file && <p>Arquivo selecionado: {file.name}</p>}
+        </>
+      )}
 
       {sheetData.length > 0 && (
         <>
@@ -279,7 +377,7 @@ function FileUploader({
           </button>
 
           <div className="table-wrapper">
-            <h3>Espelho da planilha importada:</h3>
+            <h3>{tipoConversao === "Link JSON" ? "Dados do JSON importado:" : "Espelho da planilha importada:"}</h3>
             <div className="table-container">
               <table>
                 <thead>
