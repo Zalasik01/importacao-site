@@ -380,37 +380,6 @@ function FileUploader({
       throw error;
     }
   };
-  // Função para formatar JSON na tabela
-  const formatTableJson = () => {
-    if (!sheetData || sheetData.length === 0) return;
-    
-    try {
-      // Formatar os dados da tabela para melhor visualização
-      const formattedData = sheetData.map(row => {
-        return row.map(cell => {
-          if (typeof cell === 'string' && cell.length > 100) {
-            // Se o conteúdo for muito longo, tentar formatá-lo
-            try {
-              // Tentar parsear como JSON e formatar
-              const parsed = JSON.parse(cell);
-              return JSON.stringify(parsed, null, 2);
-            } catch {
-              // Se não for JSON válido, apenas quebrar em linhas menores
-              return cell.replace(/,/g, ',\n').replace(/\{/g, '{\n').replace(/\}/g, '\n}');
-            }
-          }
-          return cell;
-        });
-      });
-      
-      // Atualizar os dados da tabela
-      setSheetData(formattedData);
-      toastSuccess("JSON formatado com sucesso!");
-      
-    } catch (error) {
-      toastError("Erro ao formatar JSON");
-    }
-  };
 
   return (
     <div className="file-upload-container">
@@ -520,17 +489,12 @@ function FileUploader({
                   : `📄 Espelho da planilha importada`}
               </h3>
               <div className="table-info">
-                <span className="record-count">{sheetData.length} registros</span>
+                <span className="record-count">
+                  {sheetData.length} registros
+                </span>
                 {tipoConversao === "Veículos" && tipoFonte === "JSON" && (
                   <div className="json-actions">
                     <span className="data-source">Origem: JSON</span>
-                    <button 
-                      className="format-json-btn"
-                      onClick={formatTableJson}
-                      title="Formatar JSON na tabela"
-                    >
-                      📝 Formatar JSON
-                    </button>
                   </div>
                 )}
               </div>
@@ -555,13 +519,18 @@ function FileUploader({
                 <thead>
                   <tr>
                     {columns.map((col, index) => (
-                      <th key={index} title={`Campo: ${col}`}>{col}</th>
+                      <th key={index} title={`Campo: ${col}`}>
+                        {col}
+                      </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {sheetData.map((row, rowIndex) => (
-                    <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'even-row' : 'odd-row'}>
+                    <tr
+                      key={rowIndex}
+                      className={rowIndex % 2 === 0 ? "even-row" : "odd-row"}
+                    >
                       {columns.map((_, colIndex) => (
                         <td key={colIndex} title={`Valor: ${row[colIndex]}`}>
                           {row[colIndex] ? (

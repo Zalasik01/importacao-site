@@ -166,7 +166,7 @@
   padding: 12px;
   border: 2px solid #ddd;
   border-radius: 8px;
-  font-family: "Courier New", monospace;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   resize: vertical;
   min-height: 200px;
@@ -232,6 +232,7 @@ table {
   margin: 0 auto;
   border-collapse: collapse;
   table-layout: auto;
+  border-spacing: 0;
 }
 
 /* Melhorar a aparência do scroll */
@@ -256,15 +257,15 @@ table {
 
 th,
 td {
-  padding: 8px;
+  padding: 4px 8px;
   text-align: left;
   border: 1px solid #ddd;
   vertical-align: top;
-  line-height: 1.2;
   font-size: 12px;
   word-wrap: break-word;
   min-width: 150px;
-  min-height: 60px;
+  min-height: 32px;
+  height: auto;
 }
 
 th {
@@ -274,7 +275,7 @@ th {
 .table-container {
   width: 70vw;
   max-width: 70vw;
-  height: calc(100vh - 200px);
+  max-height: 600px;
   min-height: 60vh;
   overflow-x: auto;
   overflow-y: auto;
@@ -359,7 +360,7 @@ th {
   .table-container {
     width: 95vw;
     max-width: 95vw;
-    height: calc(100vh - 180px);
+    max-height: 600px;
     min-height: 50vh;
   }
 
@@ -379,22 +380,12 @@ th {
     align-items: flex-start;
   }
 
-  .json-actions {
-    flex-direction: column;
-    gap: 5px;
-    align-items: flex-start;
-  }
-
-  .format-json-btn {
-    font-size: 10px;
-    padding: 3px 6px;
-  }
-
   th,
   td {
     font-size: 12px;
     padding: 3px 6px;
-    min-height: 40px;
+    min-height: 28px;
+    height: auto;
   }
 }
 
@@ -402,7 +393,7 @@ th {
   .table-container {
     width: 100vw;
     max-width: 100vw;
-    height: calc(100vh - 160px);
+    max-height: 600px;
     min-height: 45vh;
   }
 
@@ -410,7 +401,8 @@ th {
   td {
     font-size: 11px;
     padding: 2px 4px;
-    min-height: 30px;
+    min-height: 24px;
+    height: auto;
   }
 }
 
@@ -496,11 +488,6 @@ th {
   background-color: white;
 }
 
-.even-row:hover,
-.odd-row:hover {
-  background-color: #f0e6ff;
-}
-
 .empty-cell {
   color: #999;
   font-style: italic;
@@ -525,47 +512,18 @@ td {
   transition: background-color 0.2s ease;
 }
 
-td:hover {
-  background-color: #f0e6ff !important;
-}
-
-/* Novos estilos para o botão Formatar JSON */
-.json-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.format-json-btn {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 11px;
+.cell-content:hover {
   font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  white-space: nowrap;
-}
-
-.format-json-btn:hover {
-  background-color: #218838;
-}
-
-.format-json-btn:active {
-  transform: scale(0.95);
 }
 
 /* Estilos para conteúdo formatado das células */
 .cell-content {
-  font-family: "Courier New", Monaco, monospace;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 11px;
-  line-height: 1.3;
   white-space: pre-wrap;
   word-wrap: break-word;
   width: 100%;
-  min-height: 60px;
+  min-height: 20px;
   max-height: 80vh;
   overflow-y: auto;
   overflow-x: auto;
@@ -578,7 +536,7 @@ td:hover {
 
 /* Célula que contém conteúdo formatado */
 td:has(.cell-content) {
-  padding: 4px;
+  padding: 1px;
   width: auto;
   min-width: 200px;
 }
@@ -603,4 +561,60 @@ td .cell-content {
 
 .cell-content::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+}
+
+/* Otimizações específicas para o espaçamento interno das linhas da tabela */
+.table-container table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+  padding: 2px 4px;
+  min-height: 20px;
+  height: 20px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.table-container tr {
+  height: 20px;
+  min-height: 20px;
+}
+
+/* Compactar ainda mais em telas pequenas */
+@media (max-width: 768px) {
+  .table-container th,
+  .table-container td {
+    padding: 2px 3px;
+    min-height: 18px;
+    height: 18px;
+  }
+
+  .table-container tr {
+    height: 18px;
+    min-height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-container th,
+  .table-container td {
+    padding: 1px 2px;
+    min-height: 16px;
+    height: 16px;
+  }
+
+  .table-container tr {
+    height: 16px;
+    min-height: 16px;
+  }
+}
+
+/* Estilos para células com conteúdo formatado em tabelas compactas */
+.table-container .cell-content {
+  min-height: 16px;
+  padding: 1px;
+  line-height: 0.8 !important;
 }
