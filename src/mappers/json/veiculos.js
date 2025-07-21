@@ -174,9 +174,6 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         MARCA: marca || "",
         MODELO: modeloFinal || "",
         COMPLEMENTO: complemento || "",
-        "Codigo da Fipe": codigoFipe || "",
-        "Valor fipe": valorFipe || "",
-        "Lista de Opcionais": listaOpcionais || "",
         CHASSI:
           extractField(item, [
             "chassi",
@@ -303,6 +300,9 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         "CNPJ REVENDA": cnpj || "",
         ESTADO_CONVERSACAO: "Usado",
         "LINK IMAGENS": extractLinkImagens(item),
+        "Codigo da Fipe": codigoFipe || "",
+        "Valor fipe": valorFipe || "",
+        "Lista de Opcionais": listaOpcionais || "",
       };
       return result;
     } catch (error) {
