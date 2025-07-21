@@ -30,7 +30,7 @@ function App() {
   }, [origem, tipoConversao, posicao]);
 
   useEffect(() => {
-    document.title = "Altimus - Conversão de Planilhas";
+    document.title = "Autos 360 - Conversão de Planilhas";
   }, []);
 
   useEffect(() => {
