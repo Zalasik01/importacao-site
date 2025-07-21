@@ -155,9 +155,7 @@ function FileUploader({
       onSuccess: ({ data, columns, rows }) => {
         setColumns(columns);
         setSheetData(rows);
-        toastSuccess(
-          `Dados JSON carregados com sucesso! ${data.length} registros encontrados.`
-        );
+        toastSuccess(`Dados JSON carregados com sucesso! ${data.length} registros encontrados.`);
       },
       onError: (errorMessage) => {
         toastError(errorMessage);
@@ -176,9 +174,7 @@ function FileUploader({
       onSuccess: ({ data, columns, rows }) => {
         setColumns(columns);
         setSheetData(rows);
-        toastSuccess(
-          `JSON processado com sucesso! ${data.length} registros encontrados.`
-        );
+        toastSuccess(`JSON processado com sucesso! ${data.length} registros encontrados.`);
       },
       onError: (errorMessage) => {
         toastError(errorMessage);
@@ -201,10 +197,7 @@ function FileUploader({
       const fileExtension = selectedFile.name
         .slice(selectedFile.name.lastIndexOf("."))
         .toLowerCase();
-      if (
-        validTypes.includes(fileType) ||
-        validExtensions.includes(fileExtension)
-      ) {
+      if (validTypes.includes(fileType) || validExtensions.includes(fileExtension)) {
         try {
           readExcelFile(selectedFile);
         } catch (error) {
@@ -248,9 +241,7 @@ function FileUploader({
   const handleConvert = async () => {
     if (tipoConversao === "Veículos" && tipoFonte === "JSON") {
       if (jsonData.length === 0) {
-        toastError(
-          "Por favor, carregue dados do JSON primeiro usando o botão 'Visualizar'."
-        );
+        toastError("Por favor, carregue dados do JSON primeiro usando o botão 'Visualizar'.");
         return;
       }
     } else {
@@ -271,12 +262,7 @@ function FileUploader({
         payload = DataConverter.convertJsonToVeiculos(jsonData, posicao, cnpj);
       } else if (origem === "Revenda Mais") {
         if (tipoConversao === "Titulos Financeiros") {
-          payload = mapSheetDataToPayloadTitulosFinanceiros(
-            sheetData,
-            columns,
-            cnpj,
-            COLUMN_NAMES
-          );
+          payload = mapSheetDataToPayloadTitulosFinanceiros(sheetData, columns, cnpj, COLUMN_NAMES);
         } else if (tipoConversao === "Clientes") {
           payload = mapSheetDataToPayloadClientes(
             sheetData,
@@ -285,20 +271,9 @@ function FileUploader({
             COLUMN_NAMES
           );
         } else if (tipoConversao === "Receitas e Despesas Veículos") {
-          payload = mapSheetDataToPayloadRdv(
-            sheetData,
-            columns,
-            cnpj,
-            COLUMN_NAMES
-          );
+          payload = mapSheetDataToPayloadRdv(sheetData, columns, cnpj, COLUMN_NAMES);
         } else if (tipoConversao === "Veículos") {
-          payload = mapSheetDataToPayloadVeiculos(
-            sheetData,
-            columns,
-            posicao,
-            cnpj,
-            COLUMN_NAMES
-          );
+          payload = mapSheetDataToPayloadVeiculos(sheetData, columns, posicao, cnpj, COLUMN_NAMES);
         } else {
           payload = [];
         }
@@ -317,9 +292,7 @@ function FileUploader({
 
   const handleGenerateJsonSheet = async () => {
     if (jsonData.length === 0) {
-      toastError(
-        "Por favor, carregue dados do JSON primeiro usando o botão 'Visualizar'."
-      );
+      toastError("Por favor, carregue dados do JSON primeiro usando o botão 'Visualizar'.");
       return;
     }
 
@@ -328,19 +301,17 @@ function FileUploader({
 
     try {
       // Gerar payload mapeado usando o DataConverter
-      const payload = DataConverter.convertJsonToVeiculos(
-        jsonData,
-        posicao,
-        cnpj
-      );
+      const payload = DataConverter.convertJsonToVeiculos(jsonData, posicao, cnpj);
 
       // Gerar nome de arquivo específico para planilha mapeada
       const now = new Date();
-      const formattedDate = `${now.getFullYear()}${String(
-        now.getMonth() + 1
-      ).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}_${String(
-        now.getHours()
-      ).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}`;
+      const formattedDate = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}${String(now.getDate()).padStart(2, "0")}_${String(now.getHours()).padStart(
+        2,
+        "0"
+      )}${String(now.getMinutes()).padStart(2, "0")}`;
 
       const fileName = `Planilha_Mapeada_JSON_${posicao}_${formattedDate}_${cnpj}.xlsx`;
 
@@ -370,9 +341,7 @@ function FileUploader({
       });
 
       const result = await ExcelUtils.generateExcelFile(payload, fileName);
-      console.log(
-        `Arquivo gerado: ${result.fileName} com ${result.recordCount} registros`
-      );
+      console.log(`Arquivo gerado: ${result.fileName} com ${result.recordCount} registros`);
 
       return result;
     } catch (error) {
@@ -485,13 +454,11 @@ function FileUploader({
               <h3>
                 {tipoConversao === "Link JSON" ||
                 (tipoConversao === "Veículos" && tipoFonte === "JSON")
-                  ? `📊 Dados do JSON importado`
-                  : `📄 Espelho da planilha importada`}
+                  ? "📊 Dados do JSON importado"
+                  : "📄 Espelho da planilha importada"}
               </h3>
               <div className="table-info">
-                <span className="record-count">
-                  {sheetData.length} registros
-                </span>
+                <span className="record-count">{sheetData.length} registros</span>
                 {tipoConversao === "Veículos" && tipoFonte === "JSON" && (
                   <div className="json-actions">
                     <span className="data-source">Origem: JSON</span>
@@ -507,8 +474,7 @@ function FileUploader({
                   <strong>Atenção</strong>
                   <br />
                   <small>
-                    Antes de realizar a importação na base do cliente, verifique
-                    as informações.
+                    Antes de realizar a importação na base do cliente, verifique as informações.
                   </small>
                 </div>
               </div>
@@ -527,16 +493,11 @@ function FileUploader({
                 </thead>
                 <tbody>
                   {sheetData.map((row, rowIndex) => (
-                    <tr
-                      key={rowIndex}
-                      className={rowIndex % 2 === 0 ? "even-row" : "odd-row"}
-                    >
+                    <tr key={rowIndex} className={rowIndex % 2 === 0 ? "even-row" : "odd-row"}>
                       {columns.map((_, colIndex) => (
                         <td key={colIndex} title={`Valor: ${row[colIndex]}`}>
                           {row[colIndex] ? (
-                            <pre className="cell-content">
-                              {String(row[colIndex])}
-                            </pre>
+                            <pre className="cell-content">{String(row[colIndex])}</pre>
                           ) : (
                             <span className="empty-cell">-</span>
                           )}

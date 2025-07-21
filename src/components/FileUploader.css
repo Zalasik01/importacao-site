@@ -19,7 +19,9 @@
   cursor: pointer;
   display: inline-block;
   text-align: center;
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.1s ease;
   border: none;
   width: 100%;
   text-align: center;
@@ -53,7 +55,9 @@
   border-radius: 8px;
   cursor: pointer;
   margin-top: 20px;
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.1s ease;
 }
 
 .convert-button:hover:not(:disabled) {
@@ -112,7 +116,9 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.1s ease;
   white-space: nowrap;
 }
 
@@ -195,7 +201,9 @@
   cursor: pointer;
   margin-top: 10px;
   width: 100%;
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.1s ease;
 }
 
 .process-json-button:hover:not(:disabled) {
@@ -330,7 +338,9 @@ th {
   border-radius: 8px;
   cursor: pointer;
   margin-top: 20px;
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.1s ease;
 }
 
 .generate-sheet-button:hover:not(:disabled) {

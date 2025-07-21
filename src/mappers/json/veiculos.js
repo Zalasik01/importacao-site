@@ -7,9 +7,7 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
 
   if (jsonData.length > 0 && typeof jsonData[0] === "object") {
     const firstItem = jsonData[0];
-    const arrayKeys = Object.keys(firstItem).filter((key) =>
-      Array.isArray(firstItem[key])
-    );
+    const arrayKeys = Object.keys(firstItem).filter((key) => Array.isArray(firstItem[key]));
 
     if (arrayKeys.length === 1) {
       actualData = firstItem[arrayKeys[0]];
@@ -108,8 +106,7 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         "salePrice",
       ]);
 
-      const { nomeProprietario, cpfCnpjProprietario } =
-        extractProprietario(item);
+      const { nomeProprietario, cpfCnpjProprietario } = extractProprietario(item);
 
       const combustivelRaw = extractField(item, [
         "combustivel",
@@ -299,22 +296,9 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
             "mileage_km",
             "odometer_reading",
           ]) || "",
-        PORTAS:
-          extractField(item, [
-            "portas",
-            "PORTAS",
-            "doors",
-            "door_count",
-            "num_doors",
-          ]) || "",
+        PORTAS: extractField(item, ["portas", "PORTAS", "doors", "door_count", "num_doors"]) || "",
         CAMBIO: normalizeCambio(
-          extractField(item, [
-            "cambio",
-            "CAMBIO",
-            "gear",
-            "transmission",
-            "gearbox",
-          ])
+          extractField(item, ["cambio", "CAMBIO", "gear", "transmission", "gearbox"])
         ),
         "CNPJ REVENDA": cnpj || "",
         ESTADO_CONVERSACAO: "Usado",
@@ -323,9 +307,7 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
       return result;
     } catch (error) {
       console.error(`Erro ao processar item ${index}:`, error);
-      throw new Error(
-        `Erro ao processar veículo na linha ${index + 1}: ${error.message}`
-      );
+      throw new Error(`Erro ao processar veículo na linha ${index + 1}: ${error.message}`);
     }
   });
 }
@@ -374,11 +356,7 @@ function getNestedValue(obj, path) {
   let current = obj;
 
   for (const key of keys) {
-    if (
-      current === null ||
-      current === undefined ||
-      typeof current !== "object"
-    ) {
+    if (current === null || current === undefined || typeof current !== "object") {
       return undefined;
     }
     current = current[key];
@@ -440,10 +418,7 @@ function normalizeCombustivel(combustivel) {
 
   const combustivelLower = combustivel.toLowerCase();
 
-  if (
-    combustivelLower.includes("flex") ||
-    combustivelLower.includes("alcool/gasolina")
-  ) {
+  if (combustivelLower.includes("flex") || combustivelLower.includes("alcool/gasolina")) {
     return "ALCOOL/GASOLINA";
   }
 
@@ -555,9 +530,7 @@ function extractLinkImagens(item) {
       // Se for um objeto com URLs, tentar extrair os valores
       if (typeof item[field] === "object" && !Array.isArray(item[field])) {
         const urls = Object.values(item[field]).filter(
-          (url) =>
-            typeof url === "string" &&
-            (url.startsWith("http") || url.startsWith("data:"))
+          (url) => typeof url === "string" && (url.startsWith("http") || url.startsWith("data:"))
         );
         if (urls.length > 0) {
           return urls.map((url) => `"${url}"`).join(", ");
@@ -565,10 +538,7 @@ function extractLinkImagens(item) {
       }
 
       // Se for uma string de URL válida
-      if (
-        typeof value === "string" &&
-        (value.startsWith("http") || value.startsWith("data:"))
-      ) {
+      if (typeof value === "string" && (value.startsWith("http") || value.startsWith("data:"))) {
         return `"${value}"`;
       }
 

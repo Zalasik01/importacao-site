@@ -17,9 +17,7 @@ export class JsonConverter {
         return mapJsonToVeiculosPayload(jsonData, posicao, cnpj);
 
       default:
-        throw new Error(
-          `Conversão JSON não implementada para: ${tipoConversao}`
-        );
+        throw new Error(`Conversão JSON não implementada para: ${tipoConversao}`);
     }
   }
 

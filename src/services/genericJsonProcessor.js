@@ -244,9 +244,7 @@ export class GenericJsonProcessor {
       });
     });
 
-    Logger.log(
-      `Tabela gerada: ${columns.length} colunas, ${rows.length} linhas`
-    );
+    Logger.log(`Tabela gerada: ${columns.length} colunas, ${rows.length} linhas`);
     Logger.log("Estrutura detectada:", structure);
     Logger.log("Metadata:", metadata);
 

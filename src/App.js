@@ -61,12 +61,8 @@ function App() {
     if (v.length <= 2) return v;
     if (v.length <= 5) return v.replace(/^(\d{2})(\d+)/, "$1.$2");
     if (v.length <= 8) return v.replace(/^(\d{2})(\d{3})(\d+)/, "$1.$2.$3");
-    if (v.length <= 12)
-      return v.replace(/^(\d{2})(\d{3})(\d{3})(\d+)/, "$1.$2.$3/$4");
-    return v.replace(
-      /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{0,2}).*/,
-      "$1.$2.$3/$4-$5"
-    );
+    if (v.length <= 12) return v.replace(/^(\d{2})(\d{3})(\d{3})(\d+)/, "$1.$2.$3/$4");
+    return v.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{0,2}).*/, "$1.$2.$3/$4-$5");
   }
 
   const isCNPJValid = cnpj.length === 14;
@@ -152,10 +148,7 @@ function App() {
                         onChange={() => setMarcarFornecedor(!marcarFornecedor)}
                         className="checkbox"
                       />
-                      <span
-                        className="custom-checkbox"
-                        aria-hidden="true"
-                      ></span>
+                      <span className="custom-checkbox" aria-hidden="true"></span>
                       Fornecedor
                     </label>
                   </div>
@@ -180,11 +173,7 @@ function App() {
             <>{new Date(packageJson.buildDate).toLocaleString("pt-BR")}</>
           </p>
 
-          <button
-            className="help-button shadow"
-            onClick={openHelpModal}
-            aria-label="Abrir ajuda"
-          >
+          <button className="help-button shadow" onClick={openHelpModal} aria-label="Abrir ajuda">
             <FaQuestionCircle /> Ajuda
           </button>
           <Modal
@@ -199,42 +188,31 @@ function App() {
             <div tabIndex={-1} ref={modalRef}>
               <h2 className="modal-title">Como usar</h2>
               <p>
-                Utilize essa aplicação para fazer conversão de planilhas de
-                outros sistemas para o sistema Altimus
+                Utilize essa aplicação para fazer conversão de planilhas de outros sistemas para o
+                sistema Altimus
               </p>
               <ul>
+                <li>Selecione o programa de Origem (Revenda Mais, Auto-Conf, Boom Sistemas).</li>
+                <li>Selecione o tipo de Importação (Clientes, Veículos, Titulos Financeiros).</li>
                 <li>
-                  Selecione o programa de Origem (Revenda Mais, Auto-Conf, Boom
-                  Sistemas).
+                  Após isso preencha o CNPJ da revenda (Utilizado para preencher os campos de CNPJ
+                  dentro da planilha de destino).
                 </li>
                 <li>
-                  Selecione o tipo de Importação (Clientes, Veículos, Titulos
-                  Financeiros).
+                  Após a importação, verifique a planilha no <strong>"Espelho"</strong> que é
+                  apresentado.
                 </li>
                 <li>
-                  Após isso preencha o CNPJ da revenda (Utilizado para preencher
-                  os campos de CNPJ dentro da planilha de destino).
-                </li>
-                <li>
-                  Após a importação, verifique a planilha no{" "}
-                  <strong>"Espelho"</strong> que é apresentado.
-                </li>
-                <li>
-                  Caso esteja tudo certo, basta clicar em{" "}
-                  <strong>Converter</strong>.
+                  Caso esteja tudo certo, basta clicar em <strong>Converter</strong>.
                 </li>
                 <hr />
                 <li>
                   Para Tipo de Importação Clientes, existe uma checkbox de{" "}
-                  <strong>"Fornecedor"</strong> com essa opção marcada a coluna
-                  é marcada como <strong>"Sim"</strong> para todos os registros.
+                  <strong>"Fornecedor"</strong> com essa opção marcada a coluna é marcada como{" "}
+                  <strong>"Sim"</strong> para todos os registros.
                 </li>
               </ul>
-              <button
-                onClick={closeHelpModal}
-                className="modal-button"
-                autoFocus
-              >
+              <button onClick={closeHelpModal} className="modal-button" autoFocus>
                 Fechar
               </button>
             </div>

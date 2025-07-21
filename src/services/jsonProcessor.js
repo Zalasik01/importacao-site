@@ -38,11 +38,11 @@ export class JsonProcessor {
           const text = await response.text();
           data = JSON.parse(text);
         }
-        
+
         // Usar processador genérico para analisar a estrutura
         const analysis = GenericJsonProcessor.analyzeJsonStructure(data);
         Logger.log("Estrutura JSON detectada:", analysis.metadata);
-        
+
         return analysis.data;
       } else {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -62,7 +62,7 @@ export class JsonProcessor {
       if (response.ok) {
         const text = await response.text();
         data = JSON.parse(text);
-        
+
         const analysis = GenericJsonProcessor.analyzeJsonStructure(data);
         return analysis.data;
       }
@@ -82,14 +82,14 @@ export class JsonProcessor {
         const response = await fetch(proxyUrl);
         if (response.ok) {
           const result = await response.json();
-          
+
           // AllOrigins retorna { contents: "..." }
           const jsonText = result.contents || result;
-          data = typeof jsonText === 'string' ? JSON.parse(jsonText) : jsonText;
-          
+          data = typeof jsonText === "string" ? JSON.parse(jsonText) : jsonText;
+
           const analysis = GenericJsonProcessor.analyzeJsonStructure(data);
           Logger.log("Dados carregados via proxy:", analysis.metadata);
-          
+
           return analysis.data;
         }
       } catch (error) {
@@ -99,7 +99,7 @@ export class JsonProcessor {
     }
 
     // Se todas as estratégias falharam
-    throw new Error(`Falha ao carregar JSON: ${lastError?.message || 'Erro desconhecido'}`);
+    throw new Error(`Falha ao carregar JSON: ${lastError?.message || "Erro desconhecido"}`);
   }
 
   /**
@@ -115,9 +115,9 @@ export class JsonProcessor {
     try {
       const data = JSON.parse(jsonText);
       const analysis = GenericJsonProcessor.analyzeJsonStructure(data);
-      
+
       Logger.log("JSON processado:", analysis.metadata);
-      
+
       return analysis.data;
     } catch (error) {
       throw new Error(`Erro ao processar JSON: ${error.message}`);
@@ -134,7 +134,7 @@ export class JsonProcessor {
       const result = GenericJsonProcessor.processGenericJson(jsonData);
       return {
         columns: result.columns,
-        rows: result.rows
+        rows: result.rows,
       };
     } catch (error) {
       Logger.error("Erro ao converter para formato de tabela:", error);
@@ -164,15 +164,15 @@ export class JsonProcessor {
    */
   static getDataFromPath(jsonData, path) {
     try {
-      if (!path || path === 'root') {
+      if (!path || path === "root") {
         return Array.isArray(jsonData) ? jsonData : [jsonData];
       }
 
-      const pathParts = path.split('.');
+      const pathParts = path.split(".");
       let current = jsonData;
 
       for (const part of pathParts) {
-        if (current && typeof current === 'object' && part in current) {
+        if (current && typeof current === "object" && part in current) {
           current = current[part];
         } else {
           throw new Error(`Caminho "${path}" não encontrado no JSON`);

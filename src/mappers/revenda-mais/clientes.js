@@ -1,25 +1,13 @@
-function mapSheetDataToPayloadClientes(
-  sheetData,
-  columns,
-  marcarFornecedor,
-  COLUMN_NAMES
-) {
-  const colIdx = columns.reduce(
-    (acc, col, idx) => ({ ...acc, [col]: idx }),
-    {}
-  );
+function mapSheetDataToPayloadClientes(sheetData, columns, marcarFornecedor, COLUMN_NAMES) {
+  const colIdx = columns.reduce((acc, col, idx) => ({ ...acc, [col]: idx }), {});
   return sheetData
-    .filter((row) =>
-      row.some((cell) => cell !== null && cell !== undefined && cell !== "")
-    )
+    .filter((row) => row.some((cell) => cell !== null && cell !== undefined && cell !== ""))
     .map((row) => {
       const sexoValor = row[colIdx[COLUMN_NAMES.sexo]];
       const sexo = sexoValor && sexoValor.charAt(0).toUpperCase();
       const sexoFinal = sexo === "M" || sexo === "F" ? sexo : "O";
 
-      const pessoa = isNaN(row[colIdx[COLUMN_NAMES.cpfCnpj]])
-        ? "Física"
-        : "Jurídica";
+      const pessoa = isNaN(row[colIdx[COLUMN_NAMES.cpfCnpj]]) ? "Física" : "Jurídica";
 
       const cepValor = String(row[colIdx[COLUMN_NAMES.cep]] || "");
       const cep = cepValor.replace("-", "");

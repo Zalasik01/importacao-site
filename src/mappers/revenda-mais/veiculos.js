@@ -1,20 +1,8 @@
-function mapSheetDataToPayloadVeiculos(
-  sheetData,
-  columns,
-  posicao,
-  cnpj,
-  COLUMN_NAMES
-) {
-  const colIdx = columns.reduce(
-    (acc, col, idx) => ({ ...acc, [col]: idx }),
-    {}
-  );
+function mapSheetDataToPayloadVeiculos(sheetData, columns, posicao, cnpj, COLUMN_NAMES) {
+  const colIdx = columns.reduce((acc, col, idx) => ({ ...acc, [col]: idx }), {});
   return sheetData.map((row) => {
     const modelo = row[colIdx[COLUMN_NAMES.modelo]];
-    const complemento =
-      modelo && modelo.includes(" ")
-        ? modelo.split(" ").slice(1).join(" ")
-        : "";
+    const complemento = modelo && modelo.includes(" ") ? modelo.split(" ").slice(1).join(" ") : "";
     const modeloFinal = modelo ? modelo.split(" ")[0] : "";
 
     let nomeProprietario, cpfCnpjProprietario;
@@ -54,8 +42,8 @@ function mapSheetDataToPayloadVeiculos(
         row[colIdx[COLUMN_NAMES.tipo]] === "Consignado"
           ? "TERCEIRO_CONSIGNADO"
           : row[colIdx[COLUMN_NAMES.tipo]] === "Proprio"
-          ? "PROPRIO"
-          : row[colIdx[COLUMN_NAMES.tipo]],
+            ? "PROPRIO"
+            : row[colIdx[COLUMN_NAMES.tipo]],
       "VALOR COMPRA": row[colIdx[COLUMN_NAMES.valorCompra]],
       "VALOR A VISTA": row[colIdx[COLUMN_NAMES.valorVenda]],
       "VALOR DE VENDA": row[colIdx[COLUMN_NAMES.valorVenda]],

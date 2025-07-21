@@ -17,32 +17,16 @@ export class ExcelConverter {
 
     switch (tipoConversao) {
       case "Titulos Financeiros":
-        return mapSheetDataToPayloadTitulosFinanceiros(
-          sheetData,
-          columns,
-          cnpj,
-          COLUMN_NAMES
-        );
+        return mapSheetDataToPayloadTitulosFinanceiros(sheetData, columns, cnpj, COLUMN_NAMES);
 
       case "Clientes":
-        return mapSheetDataToPayloadClientes(
-          sheetData,
-          columns,
-          marcarFornecedor,
-          COLUMN_NAMES
-        );
+        return mapSheetDataToPayloadClientes(sheetData, columns, marcarFornecedor, COLUMN_NAMES);
 
       case "Receitas e Despesas Veículos":
         return mapSheetDataToPayloadRdv(sheetData, columns, cnpj, COLUMN_NAMES);
 
       case "Veículos":
-        return mapSheetDataToPayloadVeiculos(
-          sheetData,
-          columns,
-          posicao,
-          cnpj,
-          COLUMN_NAMES
-        );
+        return mapSheetDataToPayloadVeiculos(sheetData, columns, posicao, cnpj, COLUMN_NAMES);
 
       default:
         throw new Error(`Tipo de conversão não suportado: ${tipoConversao}`);

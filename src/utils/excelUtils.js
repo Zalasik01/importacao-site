@@ -12,11 +12,13 @@ export class ExcelUtils {
     const { posicao, cnpj } = params;
 
     const now = new Date();
-    const formattedDate = `${now.getFullYear()}${String(
-      now.getMonth() + 1
-    ).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}_${String(
-      now.getHours()
-    ).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}`;
+    const formattedDate = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}${String(now.getDate()).padStart(2, "0")}_${String(now.getHours()).padStart(
+      2,
+      "0"
+    )}${String(now.getMinutes()).padStart(2, "0")}`;
 
     if (tipoConversao === "Veículos" && tipoFonte === "JSON") {
       return `Exportacao_Veiculos_JSON_${posicao}_${formattedDate}_${cnpj}.xlsx`;

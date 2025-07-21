@@ -75,10 +75,7 @@ function Dropdowns({
       {origem && (
         <div>
           <label>Tipo de Conversão:</label>
-          <select
-            value={tipoConversao}
-            onChange={(e) => setTipoConversao(e.target.value)}
-          >
+          <select value={tipoConversao} onChange={(e) => setTipoConversao(e.target.value)}>
             <option value="">Selecione...</option>
             {tiposConversao.map((opcao) => (
               <option key={opcao} value={opcao}>
@@ -112,11 +109,7 @@ function Dropdowns({
       {tipoConversao === "Veículos" && posicao && (
         <div>
           <label htmlFor="tipo-fonte">Fonte dos Dados:</label>
-          <select
-            id="tipo-fonte"
-            value={tipoFonte}
-            onChange={(e) => setTipoFonte(e.target.value)}
-          >
+          <select id="tipo-fonte" value={tipoFonte} onChange={(e) => setTipoFonte(e.target.value)}>
             <option value="">Selecione...</option>
             {tiposFonte.map((opcao) => (
               <option key={opcao} value={opcao}>
