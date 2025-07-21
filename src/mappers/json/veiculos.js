@@ -1,7 +1,3 @@
-/**
- * Mapper para converter dados JSON de veículos para formato padrão Excel
- */
-
 export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
   if (!Array.isArray(jsonData) || jsonData.length === 0) {
     throw new Error("Dados JSON inválidos para mapeamento de veículos");
@@ -9,7 +5,6 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
 
   let actualData = jsonData;
 
-  // Se o primeiro item tem uma propriedade que é um array, usar esse array
   if (jsonData.length > 0 && typeof jsonData[0] === "object") {
     const firstItem = jsonData[0];
     const arrayKeys = Object.keys(firstItem).filter((key) =>
@@ -23,7 +18,6 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
 
   return actualData.map((item, index) => {
     try {
-      // Extrair e processar modelo
       const modelo = extractField(item, [
         "modelo",
         "MODELO",
@@ -40,7 +34,6 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         "versao",
       ]);
 
-      // Extrair versão para complemento
       const versao = extractField(item, [
         "versao",
         "version",
@@ -53,7 +46,6 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
 
       const { modeloFinal, complemento } = processModelo(modelo, versao);
 
-      // Extrair marca
       const marca = extractField(item, [
         "marca",
         "MARCA",
@@ -67,7 +59,6 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         "car_brand",
       ]);
 
-      // Extrair datas
       const dataCompra = extractField(item, [
         "dataCompra",
         "DATA COMPRA",
@@ -89,7 +80,6 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         "data_saida",
       ]);
 
-      // Extrair valores
       const valorCompra = extractField(item, [
         "valorCompra",
         "VALOR COMPRA",
@@ -118,11 +108,9 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         "salePrice",
       ]);
 
-      // Extrair informações do proprietário
       const { nomeProprietario, cpfCnpjProprietario } =
         extractProprietario(item);
 
-      // Extrair combustível e normalizar
       const combustivelRaw = extractField(item, [
         "combustivel",
         "COMBUSTIVEL",
@@ -136,7 +124,6 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
       ]);
       const combustivel = normalizeCombustivel(combustivelRaw);
 
-      // Extrair tipo e normalizar
       const tipoRaw = extractField(item, [
         "tipo",
         "TIPO",
@@ -343,10 +330,6 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
   });
 }
 
-/**
- * Extrai campo de um objeto usando múltiplas chaves possíveis
- * Suporta objetos aninhados usando notação de ponto
- */
 function extractField(obj, keys) {
   for (const key of keys) {
     const value = getNestedValue(obj, key);
@@ -376,9 +359,6 @@ function extractField(obj, keys) {
   return "";
 }
 
-/**
- * Obtém valor aninhado usando notação de ponto
- */
 function getNestedValue(obj, path) {
   if (!obj || typeof obj !== "object") {
     return undefined;
@@ -407,9 +387,6 @@ function getNestedValue(obj, path) {
   return current;
 }
 
-/**
- * Processa o campo modelo para separar modelo e complemento
- */
 function processModelo(modelo, versao = "") {
   if (!modelo) {
     return { modeloFinal: "", complemento: versao || "" };
@@ -427,9 +404,6 @@ function processModelo(modelo, versao = "") {
   return { modeloFinal, complemento };
 }
 
-/**
- * Extrai informações do proprietário (fornecedor ou cliente)
- */
 function extractProprietario(item) {
   // Tentar fornecedor primeiro
   const fornecedor = extractField(item, ["fornecedor", "FORNECEDOR", "seller"]);
@@ -461,9 +435,6 @@ function extractProprietario(item) {
   };
 }
 
-/**
- * Normaliza valores de combustível
- */
 function normalizeCombustivel(combustivel) {
   if (!combustivel) return "";
 
@@ -479,17 +450,11 @@ function normalizeCombustivel(combustivel) {
   return combustivel.toUpperCase();
 }
 
-/**
- * Normaliza valores de tipo
- */
 function normalizeTipo(tipo) {
   // Sempre retornar "PROPRIO" conforme solicitado
   return "PROPRIO";
 }
 
-/**
- * Normaliza valores de câmbio para garantir apenas "Automatico" ou "Manual"
- */
 function normalizeCambio(cambio) {
   if (!cambio) return "";
 
@@ -522,9 +487,6 @@ function normalizeCambio(cambio) {
   return "Manual";
 }
 
-/**
- * Formata data para o padrão esperado: DD/MM/YYYY HH:MM:SS
- */
 function formatDate(dateStr) {
   if (!dateStr) return "";
 
@@ -560,10 +522,6 @@ function formatDate(dateStr) {
   }
 }
 
-/**
- * Extrai links de imagens do JSON
- * Procura por diferentes campos que podem conter URLs de imagens
- */
 function extractLinkImagens(item) {
   const imagemFields = [
     "linkImagens",
