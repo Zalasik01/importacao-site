@@ -7,14 +7,15 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
     throw new Error("Dados JSON inválidos para mapeamento de veículos");
   }
 
-  // Verificar se os dados estão wrapped em uma propriedade (ex: {veiculos: [...]})
   let actualData = jsonData;
-  
+
   // Se o primeiro item tem uma propriedade que é um array, usar esse array
-  if (jsonData.length > 0 && typeof jsonData[0] === 'object') {
+  if (jsonData.length > 0 && typeof jsonData[0] === "object") {
     const firstItem = jsonData[0];
-    const arrayKeys = Object.keys(firstItem).filter(key => Array.isArray(firstItem[key]));
-    
+    const arrayKeys = Object.keys(firstItem).filter((key) =>
+      Array.isArray(firstItem[key])
+    );
+
     if (arrayKeys.length === 1) {
       actualData = firstItem[arrayKeys[0]];
     }
@@ -36,9 +37,9 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         "modelName",
         "car_model",
         "vehicle_name",
-        "versao", // Adicionar versao como fallback para modelo
+        "versao",
       ]);
-      
+
       // Extrair versão para complemento
       const versao = extractField(item, [
         "versao",
@@ -49,7 +50,7 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         "nivel",
         "complemento",
       ]);
-      
+
       const { modeloFinal, complemento } = processModelo(modelo, versao);
 
       // Extrair marca
@@ -74,7 +75,7 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         "date",
         "created_at",
         "date_created",
-        "dataEntradaEstoque", // Adicionar campo específico
+        "dataEntradaEstoque",
         "data_entrada_estoque",
         "entrada_estoque",
       ]);
@@ -103,7 +104,7 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
       ]);
       const valorVenda = extractField(item, [
         "valorVenda",
-        "VALOR VENDA", 
+        "VALOR VENDA",
         "VALOR_VENDA",
         "valor_venda",
         "price",
@@ -146,6 +147,40 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
       ]);
       const tipo = normalizeTipo(tipoRaw);
 
+      const codigoFipe = extractField(item, [
+        "codigoFipe",
+        "codigo_fipe",
+        "codigo_fipe_veiculo",
+        "codigoFipeVeiculo",
+        "fipe_code",
+        "fipeCode",
+        "codigo",
+        "codigoFIPE",
+      ]);
+      const valorFipe = extractField(item, [
+        "valorFipe",
+        "valor_fipe",
+        "fipe_value",
+        "valorFIPE",
+        "valorFipeVeiculo",
+        "fipeValue",
+      ]);
+      const listaOpcionais = extractField(item, [
+        "opcionais",
+        "listaOpcionais",
+        "opcionais_veiculo",
+        "optional_list",
+        "opcionaisLista",
+        "opcionaisVeiculo",
+        "opcionaisListaVeiculo",
+        "opcionaisVeic",
+        "opcionaisList",
+        "opcionaisCar",
+        "opcionaisCarro",
+        "optionalFeatures",
+        "features",
+        "extras",
+      ]);
       const result = {
         ID: "",
         STATUS: posicao === "Estoque" ? 0 : 1,
@@ -154,6 +189,9 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         MARCA: marca || "",
         MODELO: modeloFinal || "",
         COMPLEMENTO: complemento || "",
+        "Codigo da Fipe": codigoFipe || "",
+        "Valor fipe": valorFipe || "",
+        "Lista de Opcionais": listaOpcionais || "",
         CHASSI:
           extractField(item, [
             "chassi",
@@ -181,7 +219,7 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
             "NUMERO MOTOR",
             "engine_number",
             "motor_number",
-            "motor", // Adicionar campo motor
+            "motor",
             "engine",
             "numero_motor",
           ]) || "",
@@ -200,7 +238,7 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
           extractField(item, [
             "anoModelo",
             "ANO MODELO",
-            "ANO_MODELO", 
+            "ANO_MODELO",
             "ano_modelo",
             "year",
             "model_year",
@@ -212,12 +250,12 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
             "anoModelo",
             "ANO MODELO",
             "ANO_MODELO",
-            "ano_modelo", 
+            "ano_modelo",
             "year",
             "model_year",
             "modelYear",
             "vehicle_year",
-          ]) || 
+          ]) ||
           extractField(item, [
             "anoFabricacao",
             "ANO FAB",
@@ -294,7 +332,6 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         ESTADO_CONVERSACAO: "Usado",
         "LINK IMAGENS": extractLinkImagens(item),
       };
-      
       return result;
     } catch (error) {
       console.error(`Erro ao processar item ${index}:`, error);
@@ -334,7 +371,7 @@ function extractField(obj, keys) {
       return String(value).trim();
     }
   }
-  
+
   return "";
 }
 
@@ -380,7 +417,7 @@ function processModelo(modelo, versao = "") {
   const parts = modelo.split(" ");
   const modeloFinal = parts[0] || "";
   let complemento = parts.slice(1).join(" ") || "";
-  
+
   // Se temos versão e ela não está já incluída no modelo, adicionar
   if (versao && !complemento.includes(versao)) {
     complemento = complemento ? `${complemento} ${versao}` : versao;
@@ -456,26 +493,30 @@ function normalizeCambio(cambio) {
   if (!cambio) return "";
 
   const cambioStr = String(cambio).toLowerCase().trim();
-  
+
   // Verificar se contém indicações de câmbio automático
-  if (cambioStr.includes("automatico") || 
-      cambioStr.includes("automatic") || 
-      cambioStr.includes("auto") ||
-      cambioStr.includes("cvt") ||
-      cambioStr.includes("dsg") ||
-      cambioStr.includes("tiptronic") ||
-      cambioStr.includes("multitronic")) {
+  if (
+    cambioStr.includes("automatico") ||
+    cambioStr.includes("automatic") ||
+    cambioStr.includes("auto") ||
+    cambioStr.includes("cvt") ||
+    cambioStr.includes("dsg") ||
+    cambioStr.includes("tiptronic") ||
+    cambioStr.includes("multitronic")
+  ) {
     return "Automatico";
   }
-  
+
   // Verificar se contém indicações de câmbio manual
-  if (cambioStr.includes("manual") || 
-      cambioStr.includes("man") ||
-      cambioStr.includes("stick") ||
-      cambioStr.includes("mt")) {
+  if (
+    cambioStr.includes("manual") ||
+    cambioStr.includes("man") ||
+    cambioStr.includes("stick") ||
+    cambioStr.includes("mt")
+  ) {
     return "Manual";
   }
-  
+
   // Se não conseguir identificar, retornar "Manual" como padrão
   return "Manual";
 }
@@ -489,7 +530,7 @@ function formatDate(dateStr) {
   try {
     // Tentar criar um objeto Date
     let date;
-    
+
     // Se já é uma data válida
     if (dateStr instanceof Date) {
       date = dateStr;
@@ -504,12 +545,12 @@ function formatDate(dateStr) {
     }
 
     // Formatar para DD/MM/YYYY HH:MM:SS
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
 
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   } catch (error) {
@@ -525,10 +566,10 @@ function formatDate(dateStr) {
 function extractLinkImagens(item) {
   const imagemFields = [
     "linkImagens",
-    "link_imagens", 
+    "link_imagens",
     "imagens",
     "images",
-    "fotos", // Adicionar campo fotos que está no JSON
+    "fotos",
     "photos",
     "pictures",
     "gallery",
@@ -541,7 +582,7 @@ function extractLinkImagens(item) {
     "main_image",
     "thumbnail",
     "media",
-    "attachments"
+    "attachments",
   ];
 
   for (const field of imagemFields) {
@@ -551,22 +592,27 @@ function extractLinkImagens(item) {
       if (Array.isArray(item[field])) {
         return item[field].join(", ");
       }
-      
+
       // Se for um objeto com URLs, tentar extrair os valores
       if (typeof item[field] === "object" && !Array.isArray(item[field])) {
-        const urls = Object.values(item[field]).filter(url => 
-          typeof url === "string" && (url.startsWith("http") || url.startsWith("data:"))
+        const urls = Object.values(item[field]).filter(
+          (url) =>
+            typeof url === "string" &&
+            (url.startsWith("http") || url.startsWith("data:"))
         );
         if (urls.length > 0) {
           return urls.join(", ");
         }
       }
-      
+
       // Se for uma string de URL válida
-      if (typeof value === "string" && (value.startsWith("http") || value.startsWith("data:"))) {
+      if (
+        typeof value === "string" &&
+        (value.startsWith("http") || value.startsWith("data:"))
+      ) {
         return value;
       }
-      
+
       // Se for uma string com múltiplas URLs separadas
       if (typeof value === "string" && value.includes("http")) {
         return value;
