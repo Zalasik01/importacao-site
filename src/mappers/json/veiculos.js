@@ -156,6 +156,7 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         "fipeCode",
         "codigo",
         "codigoFIPE",
+        "fipe",
       ]);
       const valorFipe = extractField(item, [
         "valorFipe",
@@ -178,7 +179,7 @@ export function mapJsonToVeiculosPayload(jsonData, posicao, cnpj) {
         "opcionaisCar",
         "opcionaisCarro",
         "optionalFeatures",
-        "features",
+        "accessories",
         "extras",
       ]);
       const result = {
@@ -588,9 +589,9 @@ function extractLinkImagens(item) {
   for (const field of imagemFields) {
     const value = extractField(item, [field]);
     if (value) {
-      // Se for um array de URLs, juntar com vírgula
+      // Se for um array de URLs, formatar cada uma entre aspas
       if (Array.isArray(item[field])) {
-        return item[field].join(", ");
+        return item[field].map((url) => `"${url}"`).join(", ");
       }
 
       // Se for um objeto com URLs, tentar extrair os valores
@@ -601,7 +602,7 @@ function extractLinkImagens(item) {
             (url.startsWith("http") || url.startsWith("data:"))
         );
         if (urls.length > 0) {
-          return urls.join(", ");
+          return urls.map((url) => `"${url}"`).join(", ");
         }
       }
 
@@ -610,12 +611,15 @@ function extractLinkImagens(item) {
         typeof value === "string" &&
         (value.startsWith("http") || value.startsWith("data:"))
       ) {
-        return value;
+        return `"${value}"`;
       }
 
-      // Se for uma string com múltiplas URLs separadas
+      // Se for uma string com múltiplas URLs separadas por vírgula
       if (typeof value === "string" && value.includes("http")) {
-        return value;
+        return value
+          .split(/,\s*/)
+          .map((url) => `"${url}"`)
+          .join(", ");
       }
     }
   }
