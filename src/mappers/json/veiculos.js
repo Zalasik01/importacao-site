@@ -426,7 +426,7 @@ function normalizeCombustivel(combustivel) {
 }
 
 function normalizeTipo(tipo) {
-  // Sempre retornar "PROPRIO" conforme solicitado
+  // Sempre retornar "PROPRIO"
   return "PROPRIO";
 }
 
